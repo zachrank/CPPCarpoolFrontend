@@ -3,7 +3,7 @@ VERSION ?= latest
 
 # compile the front end js and css
 compile:
-	rm -rf node_modules
+	#rm -rf node_modules
 	docker build -t carpool-build -f Dockercompile .
 	docker rm -f carpool-build &> /dev/null || true
 	docker run --name carpool-build carpool-build
