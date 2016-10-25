@@ -4,3 +4,4 @@ node_modules
 .npm-debug.log
 *.build.css
 *.build.js
+app.templates.js
