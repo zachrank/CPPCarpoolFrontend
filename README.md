@@ -4,9 +4,12 @@
 AngularJS SPA frontend for cpp carpool web service
 
 ### local dev
-Requirements: python, make
+Local dev will watch the js and css source files for changes and automaticaly
+rebuild app.build.js and build.css
+
+Requirements: docker, make
 ```
+make build
 make dev
 ```
-
-Dev server binds to 0.0.0.0 and listens on 8080
+Dev server listens on 8080
