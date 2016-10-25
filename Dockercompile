@@ -1,0 +1,5 @@
+FROM digitallyseamless/nodejs-bower-grunt:0.12
+
+COPY . /data/
+RUN npm install --unsafe-perm \
+ && grunt build
