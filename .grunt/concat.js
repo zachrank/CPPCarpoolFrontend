@@ -27,7 +27,7 @@ module.exports = {
       './static/css/app/**/*.css',
       './static/css/app/*.css',
     ],
-    dest : './static/css/build/cppcarpool.css'
+    dest : './static/css/build/app.build.css'
   }
 
 };
