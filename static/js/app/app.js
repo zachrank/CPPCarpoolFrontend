@@ -1,1 +1,3 @@
-console.log("hello")
+app = angular.module('cppcarpool', [
+    'app.controllers.main'
+]);
