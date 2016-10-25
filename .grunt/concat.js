@@ -24,8 +24,8 @@ module.exports = {
 
   css    : {
     src  : [
-      './static/css/**/*.css',
-      './static/css/*.css',
+      './static/css/app/**/*.css',
+      './static/css/app/*.css',
     ],
     dest : './static/css/build/cppcarpool.css'
   }
