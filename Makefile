@@ -16,7 +16,7 @@ build:
 
 # run the webserver (production mode, does not compile)
 run:
-	docker run --rm -it -p 80:80 --rm $(NAME):$(VERSION)
+	docker run --rm -it -p 80:80 -v `pwd`/static:/usr/share/nginx/html $(NAME):$(VERSION)
 
 # run the server and watch source files for changes
 dev:
