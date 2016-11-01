@@ -11,7 +11,7 @@ compile:
 	docker rm -f carpool-build
 
 # build the webserver container
-build:
+build: stop compile
 	docker build -t $(NAME):$(VERSION) .
 
 net:
