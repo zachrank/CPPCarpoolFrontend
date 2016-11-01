@@ -28,7 +28,7 @@ stop:
 # run the server and watch source files for changes
 dev: net
 	#run nginx container in background
-	docker run --name carpool-nginx -d -p 8000:80 -v `pwd`/static:/usr/share/nginx/html -v `pwd`/nginx-dev.conf:/etc/nginx/conf.d/default.conf $(NAME):$(VERSION)
+	docker run --name carpool-nginx --net=cppcarpool -d -p 8000:80 -v `pwd`/static:/usr/share/nginx/html -v `pwd`/nginx-dev.conf:/etc/nginx/conf.d/default.conf $(NAME):$(VERSION)
 	#run build container
 	-docker run -v `pwd`:/data --rm -it digitallyseamless/nodejs-bower-grunt:0.12 /bin/bash -c "npm install --unsafe-perm; grunt dev"
 	docker stop carpool-nginx
