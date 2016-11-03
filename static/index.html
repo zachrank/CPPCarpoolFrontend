@@ -1,11 +1,39 @@
 <!DOCTYPE html>
 <html data-ng-app="cppcarpool">
 <head>
+    <link rel="stylesheet" href="bootstrap/css/bootstrap.min.css"></link>
     <link rel="stylesheet" href="css/build/app.build.css"></link>
     <script type="text/javascript" src="js/build/app.vendor.build.js"></script>
     <script type="text/javascript" src="js/build/app.build.js"></script>
+    <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
 </head>
-<body data-ng-controller="mainCtrl as main">
-    Hello World 2!
+<body data-ng-controller="mainCtrl as mainVm">
+    <nav class="navbar navbar-default">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-navbar-collapse" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-navbar-collapse">
+                <!--<ul class="nav navbar-nav">
+                    <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+                    <li><a href="#">Link</a></li>
+                </ul>-->
+                <ul class="nav navbar-nav navbar-right">
+                    <li data-ng-repeat="link in navlinks">
+                        <a data-ng-href="{{link.href}}" data-ng-bind="link.text"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <ng-view></ng-view>
 </body>
 </html>
