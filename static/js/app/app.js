@@ -15,5 +15,5 @@ app = angular.module('cppcarpool', [
         templateUrl: 'partials/login.html',
         controller: 'loginCtrl',
         controllerAs: 'loginVm'
-    });
+    }).otherwise('/');
 }]);

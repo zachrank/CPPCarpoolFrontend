@@ -1,0 +1,17 @@
+html, body {
+    height: 100%;
+}
+
+.navbar {
+    border-radius: 0px;
+}
+
+a, a:hover, a:visited {
+    color: #427fed;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

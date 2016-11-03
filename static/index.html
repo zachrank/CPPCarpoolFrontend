@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Brand</a>
+                <a class="navbar-brand" href="#/">CPP Carpool</a>
             </div>
 
             <div class="collapse navbar-collapse" id="bs-navbar-collapse">
@@ -26,8 +26,8 @@
                     <li><a href="#">Link</a></li>
                 </ul>-->
                 <ul class="nav navbar-nav navbar-right">
-                    <li data-ng-repeat="link in navlinks">
-                        <a data-ng-href="{{link.href}}" data-ng-bind="link.text"></a>
+                    <li data-ng-repeat="link in mainVm.navlinks">
+                        <a data-ng-href="{{link.href}}" data-ng-bind="link.text" data-ng-class="{'active': link.active}"></a>
                     </li>
                 </ul>
             </div>
