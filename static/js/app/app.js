@@ -6,6 +6,7 @@ app = angular.module('cppcarpool', [
     'app.home',
     'app.login',
     'app.register',
+    'app.profile',
     'app.common.auth',
     'app.common.directives',
     'app.common.routing'

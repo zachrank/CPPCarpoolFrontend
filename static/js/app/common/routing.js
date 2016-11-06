@@ -4,7 +4,6 @@ var route = angular.module('app.common.routing', []);
 route.config(['$routeProvider', '$locationProvider', 'routingFactoryProvider', function($routeProvider, $locationProvider, routingFactoryProvider) {
     var routes = {
         '/': {
-            'auth': true,
             'templateUrl': 'partials/home.html',
             'controller': 'homeCtrl',
             'controllerAs': 'homeVm'
@@ -18,6 +17,12 @@ route.config(['$routeProvider', '$locationProvider', 'routingFactoryProvider', f
             'templateUrl': 'partials/register.html',
             'controller': 'registerCtrl',
             'controllerAs': 'registerVm'
+        },
+        '/profile': {
+            'auth': true,
+            'templateUrl': 'partials/profile.html',
+            'controller': 'profileCtrl',
+            'controllerAs': 'profileVm'
         }
     };
 
