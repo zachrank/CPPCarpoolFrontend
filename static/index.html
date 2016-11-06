@@ -23,7 +23,7 @@
             <div class="collapse navbar-collapse" id="bs-navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li data-ng-repeat="link in mainVm.navlinks">
-                        <a data-ng-href="{{link.href}}" data-ng-bind="link.text" data-ng-class="{'active': link.active}"></a>
+                        <a data-ng-href="#{{link.path}}" data-ng-bind="link.name" data-ng-class="{'active': link.active}"></a>
                     </li>
                     <li data-ng-hide="mainVm.loggedIn()">
                         <a data-ng-href="#/login">Login</a>

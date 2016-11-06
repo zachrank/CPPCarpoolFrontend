@@ -6,7 +6,8 @@ route.config(['$routeProvider', '$locationProvider', 'routingFactoryProvider', f
         '/': {
             'templateUrl': 'partials/home.html',
             'controller': 'homeCtrl',
-            'controllerAs': 'homeVm'
+            'controllerAs': 'homeVm',
+            'displayName': 'Home'
         },
         '/login': {
             'templateUrl': 'partials/login.html',
@@ -17,6 +18,12 @@ route.config(['$routeProvider', '$locationProvider', 'routingFactoryProvider', f
             'templateUrl': 'partials/register.html',
             'controller': 'registerCtrl',
             'controllerAs': 'registerVm'
+        },
+        '/parking': {
+            'templateUrl': 'partials/parking.html',
+            'controller': 'parkingCtrl',
+            'controllerAs': 'parkingVm',
+            'displayName': 'Parking'
         },
         '/profile': {
             'auth': true,
@@ -52,6 +59,10 @@ route.provider('routingFactory', [function() {
     // define the routingFactory using routes defined in .config module above
     this.$get = [function() {
         var routing = {};
+
+        routing.list = function() {
+            return Object.keys(routes);
+        };
 
         routing.get = function(routeName) {
             return routes[routeName];
