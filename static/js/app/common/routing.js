@@ -44,6 +44,7 @@ route.provider('routingFactory', [function() {
         routes = r;
     };
 
+    // define the routingFactory using routes defined in .config module above
     this.$get = [function() {
         var routing = {};
 
