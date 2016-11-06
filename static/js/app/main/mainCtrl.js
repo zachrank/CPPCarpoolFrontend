@@ -1,6 +1,6 @@
 var mainCtrl = angular.module('app.main', []);
 
-mainCtrl.controller('mainCtrl', ['$scope', 'authService', function($scope, authService) {
+mainCtrl.controller('mainCtrl', ['$scope', 'authFactory', function($scope, authFactory) {
     var vm = this;
 
     vm.navlinks = [
@@ -10,14 +10,14 @@ mainCtrl.controller('mainCtrl', ['$scope', 'authService', function($scope, authS
         }
     ];
 
-    vm.user = authService.getUser();
+    vm.user = authFactory.getUser();
     $scope.$onRootScope('userChange', function() {
-        vm.user = authService.getUser();
+        vm.user = authFactory.getUser();
     });
 
-    vm.loggedIn = authService.loggedIn;
+    vm.loggedIn = authFactory.loggedIn;
     vm.logout = function() {
-        authService.logout();
+        authFactory.logout();
         window.location.reload();
     };
 }]);

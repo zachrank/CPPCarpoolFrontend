@@ -63,7 +63,7 @@ route.provider('routingFactory', [function() {
 
 
 // Listen for route changes so we can check auth
-route.run(['$rootScope', '$location', 'authService', 'routingFactory', function($rootScope, $location, authService, routingFactory) {
+route.run(['$rootScope', '$location', 'authFactory', 'routingFactory', function($rootScope, $location, authFactory, routingFactory) {
     $rootScope.$on('$routeChangeStart', function(event, next, current) {
         // Save previous path on the root scope incase we need it later
         if (typeof current !== 'undefined') {
@@ -77,7 +77,7 @@ route.run(['$rootScope', '$location', 'authService', 'routingFactory', function(
         }
 
         // send user to login page if path requires auth and not logged in
-        if (!authService.loggedIn() && routingFactory.requiresAuth(nextPath)) {
+        if (!authFactory.loggedIn() && routingFactory.requiresAuth(nextPath)) {
             event.preventDefault();
             $location.path('/login');
         }

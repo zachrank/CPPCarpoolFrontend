@@ -1,7 +1,7 @@
 var auth = angular.module('app.common.auth', []);
 
-auth.factory('authService', ['$rootScope', '$injector', function($rootScope, $injector) {
-    var authService = {};
+auth.factory('authFactory', ['$rootScope', '$injector', function($rootScope, $injector) {
+    var authFactory = {};
     var token = "";
     var user = {};
 
@@ -9,20 +9,20 @@ auth.factory('authService', ['$rootScope', '$injector', function($rootScope, $in
         token = localStorage.authToken;
     }
 
-    authService.getUser = function() {
+    authFactory.getUser = function() {
         return user;
     };
 
-    authService.setUser = function (u) {
+    authFactory.setUser = function (u) {
         user = u;
         $rootScope.$emit('userChange');
     };
 
-    authService.getToken = function() {
+    authFactory.getToken = function() {
         return token;
     };
 
-    authService.setToken = function(t) {
+    authFactory.setToken = function(t) {
         token = t;
         if (typeof localStorage !== "undefined") {
             localStorage.authToken = token;
@@ -30,11 +30,11 @@ auth.factory('authService', ['$rootScope', '$injector', function($rootScope, $in
         $rootScope.$emit('tokenChange');
     };
 
-    authService.loggedIn = function() {
+    authFactory.loggedIn = function() {
         return token.length > 0;
     };
 
-    authService.logout = function() {
+    authFactory.logout = function() {
         user = {};
         token = "";
         delete localStorage.authToken;
@@ -42,10 +42,10 @@ auth.factory('authService', ['$rootScope', '$injector', function($rootScope, $in
         $rootScope.$emit('userChange');
     };
 
-    return authService;
+    return authFactory;
 }]);
 
-auth.factory('authHttpInterceptor', ['$q', 'authService', function($q, authService) {
+auth.factory('authHttpInterceptor', ['$q', 'authFactory', function($q, authFactory) {
         var interceptor = {};
 
         interceptor.request = function(config) {
@@ -54,8 +54,8 @@ auth.factory('authHttpInterceptor', ['$q', 'authService', function($q, authServi
             }
 
             config.headers = config.headers || {};
-            if (authService.loggedIn()) {
-                config.headers.Authorization = 'Bearer ' + authService.getToken();
+            if (authFactory.loggedIn()) {
+                config.headers.Authorization = 'Bearer ' + authFactory.getToken();
             }
 
             return config;
@@ -64,15 +64,15 @@ auth.factory('authHttpInterceptor', ['$q', 'authService', function($q, authServi
         interceptor.response = function(response) {
             var renew = response.headers("renew-token");
             if (renew) {
-                authService.setToken(renew);
+                authFactory.setToken(renew);
             }
 
             return response;
         };
 
         interceptor.responseError = function(response) {
-            if (authService.loggedIn() && (response.status == 401 || response.status == 403)) {
-                authService.logout();
+            if (authFactory.loggedIn() && (response.status == 401 || response.status == 403)) {
+                authFactory.logout();
             }
 
             return $q.reject(response);
@@ -85,16 +85,16 @@ auth.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('authHttpInterceptor');
 }]);
 
-auth.run(['authService', '$http', function(authService, $http) {
+auth.run(['authFactory', '$http', function(authFactory, $http) {
     // try to fetch user info from server
-    if (authService.loggedIn()) {
+    if (authFactory.loggedIn()) {
         $http({
             'url': '/api/user/',
             'method': 'GET'
         }).then(function(response) {
-            authService.setUser(response.data);
+            authFactory.setUser(response.data);
         }, function(response) {
-            authService.logout();
+            authFactory.logout();
         });
     }
 }]);
