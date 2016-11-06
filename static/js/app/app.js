@@ -1,11 +1,13 @@
 app = angular.module('cppcarpool', [
+    //first party
     'ngRoute',
-    'controllers.main',
-    'controllers.home',
-    'controllers.login',
-    'controllers.register',
-    'common.auth',
-    'common.directives'
+    // app
+    'app.main',
+    'app.home',
+    'app.login',
+    'app.register',
+    'app.common.auth',
+    'app.common.directives'
 ])
 .config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {

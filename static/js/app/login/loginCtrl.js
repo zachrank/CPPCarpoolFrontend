@@ -1,4 +1,4 @@
-var loginCtrl = angular.module('controllers.login', []);
+var loginCtrl = angular.module('app.login', []);
 
 loginCtrl.controller('loginCtrl', ['$scope', '$rootScope', '$http', 'authService', function($scope, $rootScope, $http, authService) {
     var vm = this;

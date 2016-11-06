@@ -1,4 +1,4 @@
-var mainCtrl = angular.module('controllers.main', []);
+var mainCtrl = angular.module('app.main', []);
 
 mainCtrl.controller('mainCtrl', ['$scope', 'authService', function($scope, authService) {
     var vm = this;

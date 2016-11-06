@@ -1,4 +1,4 @@
-var auth = angular.module('common.auth', []);
+var auth = angular.module('app.common.auth', []);
 
 auth.factory('authService', ['$rootScope', '$injector', function($rootScope, $injector) {
     var authService = {};
