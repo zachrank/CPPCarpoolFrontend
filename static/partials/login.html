@@ -12,22 +12,22 @@
         <div class="login-stages-clip">
             <div class="login-stage" data-ng-class="{'shift': loginVm.state === 1}">
                 <div class="login-input-container">
-                    <input class="input" type="text" placeholder="Enter your email" autofocus data-ng-disabled="loginVm.state !== 0" data-ng-class="{'error': loginVm.error}" data-ng-model="loginVm.loginEmail" data-ng-keypress="loginVm.inputKeypress($event)" data-focus-on="loginVm.state === 0" data-focus-delay="260">
+                    <input class="input" type="text" placeholder="Enter your email" autofocus data-ng-disabled="loginVm.state !== 0 || loginVm.working" data-ng-class="{'error': loginVm.error}" data-ng-model="loginVm.loginEmail" data-ng-keypress="loginVm.inputKeypress($event)" data-focus-on="loginVm.state === 0" data-focus-delay="260">
                 </div>
 
                 <div class="login-error" data-ng-class="{'show': loginVm.error}" data-ng-bind="loginVm.errorText"></div>
                 <div class="login-input-container">
-                    <input class="button" type="submit" data-ng-disabled="loginVm.state !== 0" data-ng-click="loginVm.next()" value="Next">
+                    <input class="button" type="submit" data-ng-disabled="loginVm.state !== 0 || loginVm.working" data-ng-click="loginVm.next()" value="Next">
                 </div>
             </div>
             <div class="login-stage" data-ng-class="{'shift': loginVm.state === 1}">
                 <div class="login-input-container">
-                    <input class="input" type="password" placeholder="Enter your password" data-ng-disabled="loginVm.state !== 1" data-ng-class="{'error': loginVm.error}"  data-ng-model="loginVm.loginPassword" data-ng-keypress="loginVm.inputKeypress($event)" data-focus-on="loginVm.state === 1" data-focus-delay="260">
+                    <input class="input" type="password" placeholder="Enter your password" data-ng-disabled="loginVm.state !== 1 || loginVm.working" data-ng-class="{'error': loginVm.error}"  data-ng-model="loginVm.loginPassword" data-ng-keypress="loginVm.inputKeypress($event)" data-focus-on="loginVm.state === 1" data-focus-delay="260">
                 </div>
 
                 <div class="login-error" data-ng-class="{'show': loginVm.error}" data-ng-bind="loginVm.errorText"></div>
                 <div class="login-input-container">
-                    <input class="button" type="submit" data-ng-disabled="loginVm.state !== 1" data-ng-click="loginVm.next()" value="Login">
+                    <input class="button" type="submit" data-ng-disabled="loginVm.state !== 1 || loginVm.working" data-ng-click="loginVm.next()" value="Login">
                 </div>
             </div>
         </div>
