@@ -2,7 +2,8 @@ app = angular.module('cppcarpool', [
     'ngRoute',
     'app.controllers.main',
     'app.controllers.home',
-    'app.controllers.login'
+    'app.controllers.login',
+    'common.directives'
 ])
 .config(['$routeProvider', '$locationProvider',
     function($routeProvider, $locationProvider) {
