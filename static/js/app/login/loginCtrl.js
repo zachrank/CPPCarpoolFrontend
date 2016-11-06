@@ -1,6 +1,6 @@
 var loginCtrl = angular.module('controllers.login', []);
 
-loginCtrl.controller('loginCtrl', ['$scope', '$http', 'authService', function($scope, $http, authService) {
+loginCtrl.controller('loginCtrl', ['$scope', '$rootScope', '$http', 'authService', function($scope, $rootScope, $http, authService) {
     var vm = this;
     vm.state = 0;
 
@@ -33,9 +33,8 @@ loginCtrl.controller('loginCtrl', ['$scope', '$http', 'authService', function($s
                 'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
                 'data': $.param({'email': vm.loginEmail, 'password': vm.loginPassword})
             }).then(function(response) {
-                vm.state = 2;
-                vm.loginData = response.data;
-                authService.setToken(loginData.token);
+                authService.setToken(response.data.token);
+                window.location = '#' + ($rootScope.previousPath || '/');
                 vm.error = false;
                 vm.working = false;
             }, function(response) {

@@ -1,7 +1,7 @@
 <div class="register-container">
     <div class="register-box">
         <div class="register-title">Register</div>
-        <form name="registerForm" class="register-form" novalidate>
+        <form name="registerForm" class="register-form" novalidate data-ng-submit="registerVm.register()">
             <input
                 class="input"
                 type="text"
@@ -36,7 +36,7 @@
                 required
                 name="pass1"
                 data-ng-class="{'error': registerForm.pass2.$error.compareTo && registerForm.pass2.$touched}"
-                data-ng-model="registerVm.pass1"
+                data-ng-model="registerVm.password"
                 data-ng-model-options="{updateOn: 'blur'}"
                 data-ng-minlength="1"
             >
@@ -48,15 +48,15 @@
                 placeholder="Repeat password"
                 required
                 name="pass2"
-                data-ng-model="registerVm.pass2"
+                data-ng-model="registerVm.passwordConfirm"
                 data-ng-model-options="{updateOn: 'blur'}"
                 data-ng-minlength="1"
-                data-compare-to="registerVm.pass1"
+                data-compare-to="registerVm.password"
             >
             <div class="register-error" data-ng-class="{'show': registerForm.pass2.$error.compareTo && registerForm.pass2.$touched }">Passwords do not match.</div>
 
             <div class="register-spacer"></div>
-            <input class="button" type="submit" value="Register" data-ng-click="registerVm.register()">
+            <input class="button" type="submit" value="Register">
         </div>
     </div>
 </div>

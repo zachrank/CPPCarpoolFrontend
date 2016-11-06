@@ -1,12 +1,18 @@
 var mainCtrl = angular.module('controllers.main', []);
 
-mainCtrl.controller('mainCtrl', ['$scope', function($scope) {
+mainCtrl.controller('mainCtrl', ['$scope', 'authService', function($scope, authService) {
     var vm = this;
 
     vm.navlinks = [
         {
-            "text": "login",
-            "href": "#login"
+            "text": "Home",
+            "href": "#/"
         }
     ];
+
+    vm.loggedIn = authService.loggedIn;
+    vm.logout = function() {
+        authService.logout();
+        window.location.reload();
+    };
 }]);

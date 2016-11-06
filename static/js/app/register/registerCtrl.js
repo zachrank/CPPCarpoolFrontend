@@ -1,10 +1,10 @@
 var registerCtrl = angular.module('controllers.register', []);
 
-registerCtrl.controller('registerCtrl', ['$scope', function($scope) {
+registerCtrl.controller('registerCtrl', ['$scope', '$http', function($scope, $http) {
     var vm = this;
 
-    vm.pass1 = '';
-    vm.pass2 = '';
+    vm.password = '';
+    vm.passwordConfirm = '';
 
     vm.reg = {
         'email': '',
@@ -16,6 +16,8 @@ registerCtrl.controller('registerCtrl', ['$scope', function($scope) {
         if (!$scope.registerForm.$valid) {
             return;
         }
+
+        vm.reg.password = vm.password;
 
         $http({
             'url': '/api/login/register',

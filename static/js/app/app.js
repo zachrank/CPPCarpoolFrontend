@@ -23,5 +23,26 @@ app = angular.module('cppcarpool', [
         templateUrl: 'partials/register.html',
         controller: 'registerCtrl',
         controllerAs: 'registerVm'
-    }).otherwise('/');
+    })
+    .otherwise('/');
+}]).run(['$rootScope', '$location', 'authService', function($rootScope, $location, authService) {
+    var authRequired = [
+        '/'
+    ];
+
+    $rootScope.$on('$routeChangeStart', function(event, next, current) {
+        if (typeof current !== 'undefined') {
+            $rootScope.previousPath = current.$$route.originalPath;
+        }
+
+        var nextPath = '';
+        if (typeof next !== 'undefined') {
+            nextPath = next.$$route.originalPath;
+        }
+
+        if (!authService.loggedIn() && authRequired.indexOf(nextPath) !== -1) {
+            event.preventDefault();
+            $location.path('/login');
+        }
+    });
 }]);

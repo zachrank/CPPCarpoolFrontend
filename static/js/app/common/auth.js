@@ -3,10 +3,19 @@ var auth = angular.module('common.auth', []);
 auth.factory('authService', [function() {
     var authService = {};
     var token = "";
+    var user = {};
 
     if (typeof localStorage !== "undefined" && typeof localStorage.authToken !== "undefined") {
         token = localStorage.authToken;
     }
+
+    authService.getUser = function() {
+        return user;
+    };
+
+    authService.setUser = function (u) {
+        user = u;
+    };
 
     authService.getToken = function() {
         return token;
@@ -17,6 +26,10 @@ auth.factory('authService', [function() {
         if (typeof localStorage !== "undefined") {
             localStorage.authToken = token;
         }
+    };
+
+    authService.logout = function() {
+        authService.setToken("");
     };
 
     authService.loggedIn = function() {
