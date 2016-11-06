@@ -1,0 +1,93 @@
+.login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-box {
+    width: 350px;
+    overflow: hidden;
+    position: relative;
+    background-color: #f7f7f7;
+    padding: 40px;
+    margin: 0 auto 25px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
+.login-image-container {
+    width: 100px;
+    height: 100px;
+    border: none;
+    border-radius: 50%;
+    margin: 0px auto;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.login-image-container img {
+    width:100px;
+    height: 100px;
+    background: #ddd;
+    -webkit-transition: background .25s ease-out;
+       -moz-transition: background .25s ease-out;
+         -o-transition: background .25s ease-out;
+            transition: background .25s ease-out;
+}
+
+.login-image-container img.profile-found {
+    background: #17da89;
+}
+
+.login-input-container {
+    margin: 5px 0px;
+}
+
+.login-error {
+    text-align: right;
+    color: #d80c0c;
+    overflow: hidden;
+    transition: height .25s ease-out;
+    height: 0px;
+}
+
+.login-error.show {
+    height: 20px;
+}
+
+.login-name {
+    text-align: center;
+    height: 20px;
+}
+
+.login-back {
+    position: absolute;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+}
+
+.login-stages-clip {
+    position: relative;
+    overflow: hidden;
+    font-size: 0px;
+    white-space: nowrap;
+}
+
+.login-stage {
+    position: relative;
+    display: inline-block;
+    width: 270px;
+    font-size: 14px;
+    margin-right: 100%;
+    left: 0px;
+    transition: left .25s ease;
+}
+
+.login-stage.shift {
+    left: -200%;
+}

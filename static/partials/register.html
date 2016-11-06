@@ -1,0 +1,62 @@
+<div class="register-container">
+    <div class="register-box">
+        <div class="register-title">Register</div>
+        <form name="registerForm" class="register-form" novalidate data-ng-submit="registerVm.register()">
+            <input
+                class="input"
+                type="text"
+                placeholder="Full name"
+                autofocus
+                required
+                name="fullname"
+                data-ng-model="registerVm.reg.fullname"
+                data-ng-model-options="{updateOn: 'blur'}"
+                data-ng-trim="true"
+                maxlength="32"
+            >
+
+            <input
+                class="input"
+                type="text"
+                placeholder="CPP email"
+                required
+                cpp-email
+                name="email"
+                data-ng-model="registerVm.reg.email"
+                data-ng-trim="true"
+                data-ng-pattern="/^[a-zA-Z]+@cpp\.edu$/"
+            >
+            <div class="register-error" data-ng-class="{'show': registerForm.email.$error.cppEmail}">Account already exists.</div>
+
+            <input
+                id="pass1"
+                class="input"
+                type="password"
+                placeholder="Password"
+                required
+                name="pass1"
+                data-ng-class="{'error': registerForm.pass2.$error.compareTo && registerForm.pass2.$touched}"
+                data-ng-model="registerVm.password"
+                data-ng-model-options="{updateOn: 'blur'}"
+                data-ng-minlength="1"
+            >
+
+            <input
+                id="pass2"
+                class="input"
+                type="password"
+                placeholder="Repeat password"
+                required
+                name="pass2"
+                data-ng-model="registerVm.passwordConfirm"
+                data-ng-model-options="{updateOn: 'blur'}"
+                data-ng-minlength="1"
+                data-compare-to="registerVm.password"
+            >
+            <div class="register-error" data-ng-class="{'show': registerForm.pass2.$error.compareTo && registerForm.pass2.$touched }">Passwords do not match.</div>
+
+            <div class="register-spacer"></div>
+            <input class="button" type="submit" value="Register">
+        </div>
+    </div>
+</div>
