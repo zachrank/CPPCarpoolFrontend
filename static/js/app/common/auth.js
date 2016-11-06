@@ -89,7 +89,7 @@ auth.run(['authService', '$http', function(authService, $http) {
     // fetch user info from server if logged in
     if (authService.loggedIn()) {
         $http({
-            'url': '/api/user',
+            'url': '/api/user/',
             'method': 'GET'
         }).then(function(response) {
             authService.setUser(response.data);
