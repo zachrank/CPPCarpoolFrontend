@@ -1,0 +1,7 @@
+.banner {
+    margin-top: -20px;
+    width: 100%;
+    padding-bottom: 40%;
+    background: url('../../images/banner.jpg') no-repeat;
+    background-size: cover;
+}
