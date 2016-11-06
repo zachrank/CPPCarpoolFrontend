@@ -29,7 +29,7 @@
                         <a data-ng-href="#/login">Login</a>
                     </li>
                     <li class="dropdown" data-ng-show="mainVm.loggedIn()">
-                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">User <span class="caret"></span></a>
+                        <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{mainVm.user.fullname}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="" data-ng-click="mainVm.logout()">Logout</a></li>
                         </ul>

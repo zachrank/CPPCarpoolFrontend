@@ -10,6 +10,11 @@ mainCtrl.controller('mainCtrl', ['$scope', 'authService', function($scope, authS
         }
     ];
 
+    vm.user = authService.getUser();
+    $scope.$onRootScope('userChange', function() {
+        vm.user = authService.getUser();
+    });
+
     vm.loggedIn = authService.loggedIn;
     vm.logout = function() {
         authService.logout();

@@ -4,6 +4,10 @@ loginCtrl.controller('loginCtrl', ['$scope', '$rootScope', '$http', 'authService
     var vm = this;
     vm.state = 0;
 
+    if (authService.loggedIn()) {
+        window.location = '#/';
+    }
+
     vm.next = function() {
         if (vm.working) {
             return;
@@ -34,9 +38,16 @@ loginCtrl.controller('loginCtrl', ['$scope', '$rootScope', '$http', 'authService
                 'data': $.param({'email': vm.loginEmail, 'password': vm.loginPassword})
             }).then(function(response) {
                 authService.setToken(response.data.token);
-                window.location = '#' + ($rootScope.previousPath || '/');
+                delete response.data.token;
+                authService.setUser(response.data);
                 vm.error = false;
                 vm.working = false;
+
+                var toPath = $rootScope.previousPath;
+                if (!toPath || toPath === '/login' || toPath === '/register') {
+                    toPath = '/';
+                }
+                window.location = '#' + toPath;
             }, function(response) {
                 vm.error = true;
                 vm.errorText = "Wrong password.";

@@ -1,6 +1,6 @@
 var auth = angular.module('common.auth', []);
 
-auth.factory('authService', [function() {
+auth.factory('authService', ['$rootScope', '$injector', function($rootScope, $injector) {
     var authService = {};
     var token = "";
     var user = {};
@@ -15,6 +15,7 @@ auth.factory('authService', [function() {
 
     authService.setUser = function (u) {
         user = u;
+        $rootScope.$emit('userChange');
     };
 
     authService.getToken = function() {
@@ -26,10 +27,15 @@ auth.factory('authService', [function() {
         if (typeof localStorage !== "undefined") {
             localStorage.authToken = token;
         }
+        $rootScope.$emit('tokenChange');
     };
 
     authService.logout = function() {
-        authService.setToken("");
+        user = {};
+        token = "";
+        delete localStorage.authToken;
+        $rootScope.$emit('logout');
+        $rootScope.$emit('userChange');
     };
 
     authService.loggedIn = function() {
@@ -66,7 +72,7 @@ auth.factory('authHttpInterceptor', ['$q', 'authService', function($q, authServi
 
         interceptor.responseError = function(response) {
             if (authService.loggedIn() && (response.status == 401 || response.status == 403)) {
-                console.log("unauth");
+                authService.logout();
             }
 
             return $q.reject(response);
@@ -77,4 +83,18 @@ auth.factory('authHttpInterceptor', ['$q', 'authService', function($q, authServi
 
 auth.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('authHttpInterceptor');
+}]);
+
+auth.run(['authService', '$http', function(authService, $http) {
+    // fetch user info from server if logged in
+    if (authService.loggedIn()) {
+        $http({
+            'url': '/api/user',
+            'method': 'GET'
+        }).then(function(response) {
+            authService.setUser(response.data);
+        }, function(response) {
+            authService.logout();
+        });
+    }
 }]);
