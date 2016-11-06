@@ -1,23 +1,30 @@
-var mainCtrl = angular.module('controllers.main', []);
+var mainCtrl = angular.module('app.main', []);
 
-mainCtrl.controller('mainCtrl', ['$scope', 'authService', function($scope, authService) {
+mainCtrl.controller('mainCtrl', ['$scope', 'authFactory', 'routingFactory', function($scope, authFactory, routingFactory) {
     var vm = this;
 
-    vm.navlinks = [
-        {
-            "text": "Home",
-            "href": "#/"
-        }
-    ];
+    vm.navlinks = [];
 
-    vm.user = authService.getUser();
+    var routeList = routingFactory.list();
+    for (var i in routeList) {
+        var path = routeList[i];
+        var route = routingFactory.get(path);
+        if (typeof route.displayName !== 'undefined') {
+            vm.navlinks.push({
+                'name': route.displayName,
+                'path': path
+            });
+        }
+    }
+
+    vm.user = authFactory.getUser();
     $scope.$onRootScope('userChange', function() {
-        vm.user = authService.getUser();
+        vm.user = authFactory.getUser();
     });
 
-    vm.loggedIn = authService.loggedIn;
+    vm.loggedIn = authFactory.loggedIn;
     vm.logout = function() {
-        authService.logout();
+        authFactory.logout();
         window.location.reload();
     };
 }]);
