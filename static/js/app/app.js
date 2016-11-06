@@ -1,8 +1,10 @@
 app = angular.module('cppcarpool', [
     'ngRoute',
-    'app.controllers.main',
-    'app.controllers.home',
-    'app.controllers.login',
+    'controllers.main',
+    'controllers.home',
+    'controllers.login',
+    'controllers.register',
+    'common.auth',
     'common.directives'
 ])
 .config(['$routeProvider', '$locationProvider',
@@ -16,5 +18,10 @@ app = angular.module('cppcarpool', [
         templateUrl: 'partials/login.html',
         controller: 'loginCtrl',
         controllerAs: 'loginVm'
+    })
+    .when('/register', {
+        templateUrl: 'partials/register.html',
+        controller: 'registerCtrl',
+        controllerAs: 'registerVm'
     }).otherwise('/');
 }]);

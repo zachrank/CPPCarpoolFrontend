@@ -1,4 +1,4 @@
-var mainCtrl = angular.module('app.controllers.main', []);
+var mainCtrl = angular.module('controllers.main', []);
 
 mainCtrl.controller('mainCtrl', ['$scope', function($scope) {
     var vm = this;

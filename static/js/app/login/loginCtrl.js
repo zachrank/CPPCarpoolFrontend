@@ -1,6 +1,6 @@
-var loginCtrl = angular.module('app.controllers.login', []);
+var loginCtrl = angular.module('controllers.login', []);
 
-loginCtrl.controller('loginCtrl', ['$scope', '$http', function($scope, $http) {
+loginCtrl.controller('loginCtrl', ['$scope', '$http', 'authService', function($scope, $http, authService) {
     var vm = this;
     vm.state = 0;
 
@@ -35,6 +35,7 @@ loginCtrl.controller('loginCtrl', ['$scope', '$http', function($scope, $http) {
             }).then(function(response) {
                 vm.state = 2;
                 vm.loginData = response.data;
+                authService.setToken(loginData.token);
                 vm.error = false;
                 vm.working = false;
             }, function(response) {
