@@ -30,16 +30,16 @@ auth.factory('authService', ['$rootScope', '$injector', function($rootScope, $in
         $rootScope.$emit('tokenChange');
     };
 
+    authService.loggedIn = function() {
+        return token.length > 0;
+    };
+
     authService.logout = function() {
         user = {};
         token = "";
         delete localStorage.authToken;
         $rootScope.$emit('logout');
         $rootScope.$emit('userChange');
-    };
-
-    authService.loggedIn = function() {
-        return token.length > 0;
     };
 
     return authService;
@@ -86,7 +86,7 @@ auth.config(['$httpProvider', function ($httpProvider) {
 }]);
 
 auth.run(['authService', '$http', function(authService, $http) {
-    // fetch user info from server if logged in
+    // try to fetch user info from server
     if (authService.loggedIn()) {
         $http({
             'url': '/api/user/',
