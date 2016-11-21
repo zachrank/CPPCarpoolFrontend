@@ -25,7 +25,7 @@ route.config(['$routeProvider', '$locationProvider', 'routingFactoryProvider', f
             'controllerAs': 'parkingVm',
             'displayName': 'Parking'
         },
-        '/profile': {
+        '/profile/:user': {
             'auth': true,
             'templateUrl': 'partials/profile.html',
             'controller': 'profileCtrl',

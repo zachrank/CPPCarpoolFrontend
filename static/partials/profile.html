@@ -1,3 +1,36 @@
-<div>
-    User profile
+<div class="profile-container container">
+    <div class="profile-loading-overlay" data-ng-show="profileVm.loading"></div>
+    <div class="profile-loading-overlay" data-ng-show="!profileVm.loading && profileVm.error">
+        <span class="glyphicon glyphicon-warning-sign" style="color:red;"></span>&nbsp;&nbsp;error loading profile data
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="profile-image-container">
+                <img data-ng-src="{{profileVm.data.picture}}">
+            </div>
+            <div class="profile-name" data-ng-bind="profileVm.data.fullname"></div>
+            <div class="profile-email" data-ng-bind="profileVm.data.cppemail"></div>
+            <div data-ng-show="profileVm.data.timestamp">
+                <hr>
+                Joined {{profileVm.data.timestamp | date : 'longDate'}}
+            </div>
+            <hr>
+            <div class="profile-rating">
+                Rating
+                <div class="profile-stars">
+                    <div class="profile-star" data-ng-repeat="star in profileVm.data.stars track by $index" data-ng-class="{ 'full': star === 2, 'half': star === 1 }">
+                        <span class="glyphicon glyphicon-star"></span>
+                        <span class="glyphicon glyphicon-star-empty"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="">Overview</a></li>
+                <li role="presentation"><a href="">Reviews</a></li>
+                <li role="presentation"><a href="">Contact</a></li>
+            </ul>
+        </div>
+    </div>
 </div>

@@ -31,7 +31,7 @@
                     <li class="dropdown" data-ng-show="mainVm.loggedIn()">
                         <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{{mainVm.user.fullname}} <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/profile">My Profile</a></li>
+                            <li><a href="#/profile/{{mainVm.user.cppemail.split('@')[0]}}">My Profile</a></li>
                             <li><a href="" data-ng-click="mainVm.logout()">Logout</a></li>
                         </ul>
                     </li>
