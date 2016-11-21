@@ -5,22 +5,28 @@
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <div class="profile-image-container">
-                <img data-ng-src="{{profileVm.data.picture}}">
-            </div>
-            <div class="profile-name" data-ng-bind="profileVm.data.fullname"></div>
-            <div class="profile-email" data-ng-bind="profileVm.data.cppemail"></div>
-            <div data-ng-show="profileVm.data.timestamp">
-                <hr>
-                Joined {{profileVm.data.timestamp | date : 'longDate'}}
-            </div>
-            <hr>
-            <div class="profile-rating">
-                Rating
-                <div class="profile-stars">
-                    <div class="profile-star" data-ng-repeat="star in profileVm.data.stars track by $index" data-ng-class="{ 'full': star === 2, 'half': star === 1 }">
-                        <span class="glyphicon glyphicon-star"></span>
-                        <span class="glyphicon glyphicon-star-empty"></span>
+            <div class="row">
+                <div class="col-xs-6 col-sm-12">
+                    <div class="profile-image-container">
+                        <img data-ng-src="{{profileVm.data.picture}}">
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-12">
+                    <div class="profile-name" data-ng-bind="profileVm.data.fullname"></div>
+                    <div class="profile-email" data-ng-bind="profileVm.data.cppemail"></div>
+                    <div data-ng-show="profileVm.data.timestamp">
+                        <hr>
+                        Joined {{profileVm.data.timestamp | date : 'longDate'}}
+                    </div>
+                    <hr>
+                    <div class="profile-rating">
+                        Rating
+                        <div class="profile-stars">
+                            <div class="profile-star" data-ng-repeat="star in profileVm.data.stars track by $index" data-ng-class="{ 'full': star === 2, 'half': star === 1 }">
+                                <span class="glyphicon glyphicon-star"></span>
+                                <span class="glyphicon glyphicon-star-empty"></span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -34,10 +40,9 @@
             <div data-ng-show="profileVm.tab === 0">
                 <div class="profile-map">
                     <iframe
-                        width="600"
-                        height="450"
+                        class="profile-map-frame"
                         frameborder="0" style="border:0"
-                        src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Space+Needle,Seattle+WA" allowfullscreen>
+                        src="{{ profileVm.mapsUrl }}" allowfullscreen>
                     </iframe>
               </doi>
             </div>

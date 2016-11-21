@@ -22,6 +22,7 @@
     margin: 0px auto;
     border-radius: 10px;
     background-color: #ddd;
+    margin-bottom: 10px;
 }
 
 .profile-image-container > img {
@@ -32,12 +33,12 @@
 
 .profile-name {
     font-size: 24px;
-    margin: 10px 5px 0px 5px;
+    margin: 0px 5px 5px 5px;
 }
 
 .profile-email {
     color: #666;
-    margin: 5px 5px 0px 5px;
+    margin: 0px 5px;
 }
 
 .profile-rating {
@@ -84,4 +85,16 @@
     position: absolute;
     top: 0px;
     left: 0px;
+}
+
+.profile-map {
+    width: 100%;
+    min-height: 500px;
+    position: relative;
+}
+
+.profile-map-frame {
+    height: 100%;
+    width: 100%;
+    position: absolute;
 }
