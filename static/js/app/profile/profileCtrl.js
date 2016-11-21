@@ -6,6 +6,12 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     vm.loading = true;
     vm.error = false;
     vm.myProfile = (authFactory.getUser().cppemail === $routeParams.user + '@cpp.edu');
+    vm.tab = 0;
+    vm.tabs = [
+        'Overview',
+        'Reviews',
+        'Contact'
+    ];
 
     $http({
         'url': '/api/user/' + $routeParams.user,

@@ -27,10 +27,20 @@
         </div>
         <div class="col-sm-9">
             <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="">Overview</a></li>
-                <li role="presentation"><a href="">Reviews</a></li>
-                <li role="presentation"><a href="">Contact</a></li>
+                <li role="presentation" data-ng-repeat="tabName in profileVm.tabs" data-ng-class="{'active': profileVm.tab === $index}" data-ng-click="profileVm.tab = $index">
+                    <a href="" data-ng-bind="tabName"></a>
+                </li>
             </ul>
+            <div data-ng-show="profileVm.tab === 0">
+                <div class="profile-map">
+                    <iframe
+                        width="600"
+                        height="450"
+                        frameborder="0" style="border:0"
+                        src="https://www.google.com/maps/embed/v1/place?key=YOUR_API_KEY&q=Space+Needle,Seattle+WA" allowfullscreen>
+                    </iframe>
+              </doi>
+            </div>
         </div>
     </div>
 </div>
