@@ -65,6 +65,26 @@ cd.directive('compareTo', [function () {
 }]);
 
 cd.directive('stars', ['$parse', function($parse) {
+    var buildStarsArr = function(numStars) {
+        // normalize value
+        // ex: 1.0 to 1.2999.. => 1.0, 1.3 to 1.7999.. => 1.5, 1.8 to 2.0 => 2.0
+        var numStarsNorm = Math.round(numStars * 2) / 2;
+
+        // build starsArr
+        // 0 = empty, 1 = half, 2 = full
+        var starsArr = [0, 0, 0, 0, 0];
+        var index = 0;
+        while (numStars > 0) {
+            numStars -= 0.5;
+            starsArr[index] += 1;
+            if (starsArr[index] === 2) {
+                index++;
+            }
+        }
+
+        return starsArr;
+    };
+
     return {
         restrict: 'A',
         scope: {
@@ -74,24 +94,11 @@ cd.directive('stars', ['$parse', function($parse) {
         template: '<span class="stars"><span class="star" data-ng-repeat="star in starsArr track by $index" data-ng-class="{ \'full\': star === 2, \'half\': star === 1 }"><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star-empty"></span></span></span>',
         link: function(scope, element, attrs) {
             // float between 0.0 and 5.0
-            var numStars = scope.stars() || 0;
-            // normalize value
-            // ex: 1.0 to 1.2999.. => 1.0, 1.3 to 1.7999.. => 1.5, 1.8 to 2.0 => 2.0
-            var numStarsNorm = Math.round(numStars * 2) / 2;
+            scope.starsArr = buildStarsArr(scope.stars() || 0);
 
-            // build starsArr
-            // 0 = empty, 1 = half, 2 = full
-            var starsArr = [0, 0, 0, 0, 0];
-            var index = 0;
-            while (numStars > 0) {
-                numStars -= 0.5;
-                starsArr[index] += 1;
-                if (starsArr[index] === 2) {
-                    index++;
-                }
-            }
-
-            scope.starsArr = starsArr;
+            scope.$watch(scope.stars, function(num){
+                scope.starsArr = buildStarsArr(scope.stars() || 0);
+            });
         }
     };
 }]);
