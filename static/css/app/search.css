@@ -1,0 +1,30 @@
+.search-results {
+    margin-bottom: 20px;
+}
+
+.search-result {
+    display: flex;
+    padding: 20px 10px;
+}
+
+.search-result:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.search-result-image {
+    min-width: 64px;
+    height: 64px;
+    border-radius: 5px;
+    background: url('/images/profile-default.png');
+    background-size: contain;
+    background-color: #ddd;
+}
+
+.search-result-content {
+    margin-left: 15px;
+    flex-grow: 1;
+}
+
+.search-result-topline {
+    font-size: 18px;
+}

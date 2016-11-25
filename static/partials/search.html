@@ -1,1 +1,32 @@
-I am the search page
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <h2>Find a Ride</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-3">
+            sidebar
+        </div>
+        <div class="col-sm-9">
+            <div class="search-results">
+                <div class="search-result" data-ng-repeat="r in searchVm.results">
+                    <a data-ng-href="#/profile/{{r.cppusername}}" class="search-result-image">
+                        
+                    </a>
+                    <div class="search-result-content">
+                        <div class="search-result-topline">
+                            <a data-ng-href="#/profile/{{r.cppusername}}" data-ng-bind="r.fullname"></a>
+                            &nbsp;
+                            <span data-stars="r.stars"></span>
+                        </div>
+                        <div>
+                             {{r.reviews.length}} review{{r.reviews.length === 1 ? '' : 's' }} - {{r.distance}} miles
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
