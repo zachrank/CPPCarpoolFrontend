@@ -28,3 +28,9 @@
 .search-result-topline {
     font-size: 18px;
 }
+
+.search-result-city {
+    font-size: 16px;
+    float: right;
+    color: #666;
+}

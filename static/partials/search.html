@@ -13,16 +13,22 @@
             <div class="search-results">
                 <div class="search-result" data-ng-repeat="r in searchVm.results">
                     <a data-ng-href="#/profile/{{r.cppusername}}" class="search-result-image">
-                        
+
                     </a>
                     <div class="search-result-content">
                         <div class="search-result-topline">
                             <a data-ng-href="#/profile/{{r.cppusername}}" data-ng-bind="r.fullname"></a>
                             &nbsp;
                             <span data-stars="r.stars"></span>
+                            <span class="search-result-city">
+                                <span class="glyphicon glyphicon-home"></span>&nbsp;{{r.city}}
+                            </span>
                         </div>
                         <div>
-                             {{r.reviews.length}} review{{r.reviews.length === 1 ? '' : 's' }} - {{r.distance}} miles
+                            {{r.reviews.length}} review{{r.reviews.length === 1 ? '' : 's' }} - {{r.distance}} miles
+                        </div>
+                        <div>
+                            schedule goes here
                         </div>
                     </div>
                 </div>

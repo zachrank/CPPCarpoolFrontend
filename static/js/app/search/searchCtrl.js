@@ -7,12 +7,14 @@ search.controller('searchCtrl', ['$scope', function($scope) {
         'fullname': 'James Polk',
         'stars': 5,
         'reviews': [{}],
-        'distance': 13
+        'distance': 13,
+        'city': 'China Hills'
     }, {
         'cppusername': 'cthill',
         'fullname': 'Osama bin Laden',
         'stars': 1,
         'reviews': [{}, {}],
-        'distance': 20
+        'distance': 20,
+        'city': 'China Hills'
     }];
 }]);

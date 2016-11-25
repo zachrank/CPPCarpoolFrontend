@@ -5,6 +5,8 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     vm.data = null;
     vm.loading = true;
     vm.error = false;
+    vm.myCppEmail = authFactory.getUser().cppemail;
+    vm.myProfile = (vm.myCppEmail === $routeParams.user + '@cpp.edu');
     $scope.$onRootScope('userChange', function() {
         vm.myCppEmail = authFactory.getUser().cppemail;
         vm.myProfile = (vm.myCppEmail === $routeParams.user + '@cpp.edu');
