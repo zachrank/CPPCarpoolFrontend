@@ -1,4 +1,7 @@
 <div class="login-container">
+    <div class="login-top-text">
+        Sign in with your CPP email
+    </div>
     <div class="login-box">
         <div class="login-back" data-ng-show="loginVm.state === 1" data-ng-click="loginVm.back()">
             <span class="glyphicon glyphicon-circle-arrow-left"></span>
@@ -17,7 +20,7 @@
 
                 <div class="login-error" data-ng-class="{'show': loginVm.error}" data-ng-bind="loginVm.errorText"></div>
                 <div class="login-input-container">
-                    <input class="button" type="submit" data-ng-disabled="loginVm.state !== 0 || loginVm.working" data-ng-click="loginVm.next()" value="Next">
+                    <input class="button full" type="submit" data-ng-disabled="loginVm.state !== 0 || loginVm.working" data-ng-click="loginVm.next()" value="Next">
                 </div>
             </div>
             <div class="login-stage" data-ng-class="{'shift': loginVm.state === 1}">
@@ -27,7 +30,7 @@
 
                 <div class="login-error" data-ng-class="{'show': loginVm.error}" data-ng-bind="loginVm.errorText"></div>
                 <div class="login-input-container">
-                    <input class="button" type="submit" data-ng-disabled="loginVm.state !== 1 || loginVm.working" data-ng-click="loginVm.next()" value="Login">
+                    <input class="button full" type="submit" data-ng-disabled="loginVm.state !== 1 || loginVm.working" data-ng-click="loginVm.next()" value="Login">
                 </div>
             </div>
         </div>

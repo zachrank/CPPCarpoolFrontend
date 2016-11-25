@@ -1,3 +1,98 @@
-<div>
-    User profile
+<div class="profile-container container">
+    <div class="profile-loading-overlay" data-ng-show="profileVm.loading"></div>
+    <div class="profile-loading-overlay" data-ng-show="!profileVm.loading && profileVm.error">
+        <span class="glyphicon glyphicon-warning-sign" style="color:red;"></span>&nbsp;&nbsp;error loading profile data
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="row">
+                <div class="col-xs-6 col-sm-12">
+                    <div class="profile-image-container">
+                        <img data-ng-src="{{profileVm.data.picture}}">
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-12">
+                    <div class="profile-name" data-ng-bind="profileVm.data.fullname"></div>
+                    <div class="profile-email" data-ng-bind="profileVm.data.cppemail"></div>
+                    <div data-ng-show="profileVm.data.timestamp">
+                        <hr>
+                        Joined {{profileVm.data.timestamp | date : 'longDate'}}
+                    </div>
+                    <hr>
+                    <div class="profile-rating">
+                        Rating
+                        <div data-ng-if="profileVm.data.stars" data-stars="profileVm.data.stars"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li role="presentation" data-ng-repeat="tabName in profileVm.tabs" data-ng-class="{'active': profileVm.tab === $index}" data-ng-click="profileVm.setTab($index)">
+                    <a href="" data-ng-bind="tabName"></a>
+                </li>
+            </ul>
+            <div data-ng-show="profileVm.tab === 0">
+                <div class="profile-map" data-ng-if="profileVm.data && profileVm.data.profilecomplete">
+                    <iframe
+                        class="profile-map-frame"
+                        frameborder="0" style="border:0"
+                        data-ng-src="{{ profileVm.mapsUrl }}" allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="profile-warntext" data-ng-if="profileVm.data && !profileVm.data.profilecomplete">
+                    User has not completed their profile.
+                </div>
+            </div>
+            <div data-ng-show="profileVm.tab === 1">
+                <div class="profile-reviews">
+                    <div data-ng-if="profileVm.data && !profileVm.data.reviews.length">
+                        <div class="profile-warntext">
+                            User has no reviews.
+                        </div>
+                    </div>
+                    <div data-ng-if="profileVm.data && profileVm.data.reviews.length">
+                        <div class="profile-review" data-ng-repeat="r in profileVm.data.reviews">
+                            <div class="profile-review-image">
+
+                            </div>
+                            <div class="profile-review-content">
+                                <div class="profile-review-topline">
+                                    <span class="profile-review-name" data-ng-bind="r.reviewer_name"></span>&nbsp;&nbsp;gave&nbsp;&nbsp;<span data-stars="r.stars"></span>&nbsp;&nbsp;<span class="profile-delete glyphicon glyphicon-trash" data-ng-click="profileVm.deleteReview(r.id)"></span>
+                                </div>
+                                <p data-ng-bind="r.content"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-review-compose">
+                    <!-- compose button -->
+                    <div class="pull-right button" data-ng-click="profileVm.reviewing = true;" data-ng-show="!profileVm.reviewing && !profileVm.myProfile">
+                        <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Write a Review
+                    </div>
+                    <!-- composing elements -->
+                    <div data-ng-show="profileVm.reviewing">
+                        <div class="profile-review-error" data-ng-show="profileVm.reviewError">
+                            error: {{profileVm.reviewError}}
+                        </div>
+                        <div>
+                            <textarea class="profile-review-textarea" placeholder="Compose your review here..." data-ng-model="profileVm.newReviewContent"></textarea>
+                        </div>
+                        <div class="pull-left">
+                            Rating:
+                            <span class="stars">
+                                <span class="star" style="cursor:pointer;" data-ng-repeat="s in [1, 2, 3, 4, 5]" data-ng-class="{'full': profileVm.newReviewStars >= s || profileVm.newReviewStarsDisplay >= s}" data-ng-mouseenter="profileVm.newReviewStarsDisplay = s" data-ng-mouseleave="profileVm.newReviewStarsDisplay = 0" data-ng-click="profileVm.newReviewStars = s">
+                                    <span class="glyphicon glyphicon-star"></span>
+                                    <span class="glyphicon glyphicon-star-empty"></span>
+                                </span>
+                            </span>
+                        </div>
+                        <div class="pull-right button" data-ng-click="profileVm.submitReview()">
+                            <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Submit
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
