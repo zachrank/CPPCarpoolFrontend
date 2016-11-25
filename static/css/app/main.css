@@ -49,7 +49,7 @@ a:hover {
     border: 1px solid #d80c0c;
 }
 
-.button {
+.button.full {
     width: 100%;
     height: 36px;
     background-color: #17da89;
@@ -57,4 +57,63 @@ a:hover {
     font-weight: bold;
     color: #444;
     font-size: 12px;
+}
+
+.button {
+    padding: 8px 16px;
+    cursor: pointer;
+    background-color: #17da89;
+    border: 1px solid #18b071;
+    border-radius: 2px;
+    font-weight: bold;
+    color: #444;
+    font-size: 12px;
+    user-select: none;
+}
+
+.button:active {
+    box-shadow: inset 0px 1px 2px;
+}
+
+.stars {
+    position: relative;
+}
+
+.star {
+    position: relative;
+    display: inline-block;
+    font-size: 22px;
+    width: 1em;
+    height: 1em;
+    color: #666;
+    top: 5px;
+}
+
+.star > span:first-child {
+    display: none;
+    color: #ffc300;
+    z-index: 1;
+}
+
+.star.half > span:first-child {
+    display: block;
+    position: absolute;
+    width: .48em;
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+}
+
+.star.full > span:first-child {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+}
+
+.star > span {
+    display: block;
+    position: absolute;
+    top: 0px;
+    left: 0px;
 }

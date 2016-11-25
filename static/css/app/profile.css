@@ -46,47 +46,6 @@
     color: #000;
 }
 
-.profile-stars {
-    position: relative;
-    margin-top: 5px;
-}
-
-.profile-star {
-    position: relative;
-    display: inline-block;
-    font-size: 22px;
-    width: 1em;
-    height: 1em;
-    color: #ffc300;
-}
-
-.profile-star > span:first-child {
-    display: none;
-}
-
-.profile-star.half > span:first-child {
-    display: block;
-    position: absolute;
-    width: .48em;
-    overflow: hidden;
-    top: 0px;
-    left: 0px;
-}
-
-.profile-star.full > span:first-child {
-    display: block;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
-.profile-star > span {
-    display: block;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-}
-
 .profile-map {
     width: 100%;
     min-height: 500px;
@@ -97,4 +56,81 @@
     height: 100%;
     width: 100%;
     position: absolute;
+}
+
+.profile-warntext {
+    margin: 150px 0px;
+    text-align: center;
+    font-size: 22px;
+    color: #666;
+}
+
+.profile-btn {
+    width: auto;
+}
+
+.profile-reviews {
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+.profile-review {
+    display: flex;
+    padding: 20px 10px;
+}
+
+.profile-review:nth-child(even) {
+    background: #f9f9f9;
+}
+
+.profile-review-image {
+    min-width: 64px;
+    height: 64px;
+    border-radius: 5px;
+    background: url('/images/profile-default.png');
+    background-size: contain;
+    background-color: #ddd;
+}
+
+.profile-review-content {
+    margin-left: 15px;
+    flex-grow: 1;
+}
+
+.profile-review-topline {
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.profile-review-name {
+    color: black;
+    font-size: 20px;
+}
+
+.profile-review-textarea {
+    resize: none;
+    width: 100%;
+    height: 100px;
+    outline: none;
+    padding: 10px;
+    border: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.profile-review-textarea:focus {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.profile-review-error {
+    margin: 20px 0px;
+    color: red;
+}
+
+.profile-review-message {
+    text-align: center;
+    margin: 20px 0px;
+}
+
+.profile-delete {
+    cursor: pointer;
 }
