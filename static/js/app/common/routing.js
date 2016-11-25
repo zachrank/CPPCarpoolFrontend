@@ -19,6 +19,13 @@ route.config(['$routeProvider', '$locationProvider', 'routingFactoryProvider', f
             'controller': 'registerCtrl',
             'controllerAs': 'registerVm'
         },
+        '/search': {
+            'auth': true,
+            'templateUrl': 'partials/search.html',
+            'controller': 'searchCtrl',
+            'controllerAs': 'searchVm',
+            'displayName': 'Find a Ride'
+        },
         '/parking': {
             'templateUrl': 'partials/parking.html',
             'controller': 'parkingCtrl',
