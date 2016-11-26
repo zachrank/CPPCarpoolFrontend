@@ -46,8 +46,10 @@
                             {{r.reviewCount}} review{{r.reviewCount === 1 ? '' : 's' }} - {{r.dist}} miles
                         </div>
                         <div class="search-result-schedule">
-                            <div data-ng-repeat="s in r.schedule">
-                                {{ s.day }}: {{ s.arrive }} - {{ s.depart }}
+                            <div data-ng-repeat="s in r.schedule" class="schedule-row">
+                                <div class="schedule-row-container">
+                                    <div class="schedule-row-day">{{ s.day }}:</div> {{ s.arrive }} - {{ s.depart }}
+                                </div>
                             </div>
                         </div>
                     </div>

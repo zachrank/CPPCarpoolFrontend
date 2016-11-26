@@ -62,3 +62,26 @@
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endColorstr='#6F5499', GradientType=0);
     background-repeat: repeat-x;
 }
+
+.search-result-schedule {
+    margin-top: 5px;
+}
+
+.schedule-row {
+
+}
+
+.schedule-row > .schedule-row-container {
+    display: inline-block;
+    padding: 2px 5px;
+}
+
+.schedule-row:nth-child(even) > .schedule-row-container {
+    background: #eee;
+}
+
+.schedule-row-day {
+    display: inline-block;
+    width: 40px;
+    text-align: right;
+}
