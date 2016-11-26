@@ -6,6 +6,9 @@ search.controller('searchCtrl', ['$scope', '$http', 'authFactory', function($sco
     vm.loading = true;
     vm.error = false;
     vm.profilecomplete = false;
+    var dayOfWeekMap = [
+        'Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'
+    ];
 
     function load() {
         var user = authFactory.getUser();
@@ -22,8 +25,21 @@ search.controller('searchCtrl', ['$scope', '$http', 'authFactory', function($sco
         }).then(function(response){
             vm.results = response.data.results;
             for (var i = 0; i < vm.results.length; i++) {
-                var atIndex = vm.results[i].cppemail.indexOf('@');
-                vm.results[i].cppusername = vm.results[i].cppemail.slice(0, atIndex);
+                var r = vm.results[i];
+                var atIndex = r.cppemail.indexOf('@');
+                r.cppusername = r.cppemail.slice(0, atIndex);
+
+                var processedSched = [];
+                for (var j = 0; j < r.schedule.length; j++) {
+                    if (r.schedule[j].arrive !== null && r.schedule[j].depart !== null) {
+                        processedSched.push({
+                            'day': dayOfWeekMap[j],
+                            'arrive': r.schedule[j].arrive.slice(0, 5),
+                            'depart': r.schedule[j].depart.slice(0, 5)
+                        });
+                    }
+                }
+                r.schedule = processedSched;
             }
 
             vm.loading = false;

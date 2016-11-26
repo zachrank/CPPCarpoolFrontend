@@ -41,8 +41,10 @@
                         <div>
                             {{r.reviewCount}} review{{r.reviewCount === 1 ? '' : 's' }} - {{r.dist}} miles
                         </div>
-                        <div>
-                            schedule goes here
+                        <div class="search-result-schedule">
+                            <div data-ng-repeat="s in r.schedule">
+                                {{ s.day }}: {{ s.arrive }} - {{ s.depart }}
+                            </div>
                         </div>
                     </div>
                 </div>
