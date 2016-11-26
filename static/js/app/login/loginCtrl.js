@@ -65,6 +65,8 @@ loginCtrl.controller('loginCtrl', ['$scope', '$rootScope', '$http', 'authFactory
     vm.back = function() {
         vm.state = 0;
         vm.loginPassword = '';
+        vm.error = false;
+        vm.errorText = '';
         vm.loginData = null;
     };
 

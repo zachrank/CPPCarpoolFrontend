@@ -46,7 +46,7 @@ a:hover {
 
 .input:focus {
   outline: none;
-  border: 1px solid #17da89;
+  border: 1px solid #8365b2;
   -moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
   -webkit-box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
   box-shadow: inset 0 1px 2px rgba(0,0,0,0.3);
@@ -59,27 +59,34 @@ a:hover {
 .button.full {
   width: 100%;
   height: 36px;
-  background-color: #17da89;
-  border: 1px solid #18b071;
-  font-weight: bold;
-  color: #444;
-  font-size: 12px;
 }
 
 .button {
   padding: 8px 16px;
-  cursor: pointer;
-  background-color: #17da89;
-  border: 1px solid #18b071;
+  /*background-color: #17da89;
+  border: 1px solid #18b071;*/
+  background-color: #8365b2;
+  border: 1px solid #6f5499;
   border-radius: 2px;
   font-weight: bold;
-  color: #444;
+  /*color: #444;*/
+  color: white;
   font-size: 12px;
   user-select: none;
 }
 
+.button:hover {
+  background-color: #9373c4;
+  cursor: pointer;
+}
+
 .button:active {
-  box-shadow: inset 0px 1px 2px;
+  /*box-shadow: inset 0px 1px 2px;*/
+  background-color: #6f5499;
+}
+
+.button:focus {
+  outline: none;
 }
 
 .stars {
