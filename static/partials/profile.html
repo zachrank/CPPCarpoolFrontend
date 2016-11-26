@@ -1,5 +1,7 @@
 <div class="profile-container container">
-    <div class="profile-loading-overlay" data-ng-show="profileVm.loading"></div>
+    <div class="profile-loading-overlay" data-ng-show="profileVm.loading">
+        <span class="spinner-icon large"></span>&nbsp;&nbsp;Loading...
+    </div>
     <div class="profile-loading-overlay" data-ng-show="!profileVm.loading && profileVm.error">
         <span class="glyphicon glyphicon-warning-sign" style="color:red;"></span>&nbsp;&nbsp;error loading profile data
     </div>
@@ -22,6 +24,7 @@
                     <div class="profile-rating">
                         Rating
                         <div data-ng-if="profileVm.data.stars" data-stars="profileVm.data.stars"></div>
+                        <div style="font-size:14px;" data-ng-show="!profileVm.data.stars">No reviews</div>
                     </div>
                 </div>
             </div>

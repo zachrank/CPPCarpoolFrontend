@@ -6,10 +6,12 @@
     </div>
     <hr>
     <div class="row">
-        <div class="col-sm-3">
-            sidebar
-        </div>
-        <div class="col-sm-9">
+        <div class="col-sm-12 col-md-9">
+            <div class="search-topbar">
+                <span data-ng-show="searchVm.loading && !searchVm.error"><span class="spinner-icon nomargin"></span>&nbsp;Searching...</span>
+                <span data-ng-show="!searchVm.loading && !searchVm.error">Found {{searchVm.results.length}} user{{searchVm.results.length === 1 ? '':'s'}} near you.</span>
+                <span style="color:red;" data-ng-show="!searchVm.loading && searchVm.error">Error loading search results</span>
+            </div>
             <div class="search-results">
                 <div class="search-result" data-ng-repeat="r in searchVm.results">
                     <a data-ng-href="#/profile/{{r.cppusername}}" class="search-result-image">

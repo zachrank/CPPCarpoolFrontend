@@ -34,3 +34,13 @@
     float: right;
     color: #666;
 }
+
+.search-topbar {
+    margin-bottom: 10px;
+    font-size: 16px;
+    padding: 0px 15px;
+}
+
+.search-preferences {
+    font-size: 16px;
+}
