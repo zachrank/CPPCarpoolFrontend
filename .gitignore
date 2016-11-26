@@ -5,3 +5,4 @@ node_modules
 *.build.css
 *.build.js
 app.templates.js
+.project
