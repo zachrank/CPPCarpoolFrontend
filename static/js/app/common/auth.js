@@ -22,12 +22,25 @@ auth.factory('authFactory', ['$rootScope', '$injector', function($rootScope, $in
         return token;
     };
 
-    authFactory.setToken = function(t) {
-        token = t;
+    authFactory.setToken = function(newToken) {
+        if (typeof newToken === 'undefined') {
+            newToken = "";
+        }
+        var oldToken = token;
+
+        // save new token
+        token = newToken;
         if (typeof localStorage !== "undefined") {
             localStorage.authToken = token;
         }
         $rootScope.$emit('tokenChange');
+
+        // compare new token to old token and fire correct event
+        if (!!oldToken.length && !newToken.length) {
+            $rootScope.$emit('logout');
+        } else if (!oldToken.length && !!newToken.length) {
+            $rootScope.$emit('login');
+        }
     };
 
     authFactory.loggedIn = function() {
@@ -35,11 +48,9 @@ auth.factory('authFactory', ['$rootScope', '$injector', function($rootScope, $in
     };
 
     authFactory.logout = function() {
-        user = {};
-        token = "";
         delete localStorage.authToken;
-        $rootScope.$emit('logout');
-        $rootScope.$emit('userChange');
+        authFactory.setToken();
+        authFactory.setUser({});
     };
 
     return authFactory;
@@ -85,16 +96,29 @@ auth.config(['$httpProvider', function ($httpProvider) {
     $httpProvider.interceptors.push('authHttpInterceptor');
 }]);
 
-auth.run(['authFactory', '$http', function(authFactory, $http) {
-    // try to fetch user info from server
-    if (authFactory.loggedIn()) {
-        $http({
-            'url': '/api/user/',
-            'method': 'GET'
-        }).then(function(response) {
-            authFactory.setUser(response.data);
-        }, function(response) {
-            authFactory.logout();
-        });
+auth.run(['$rootScope', 'authFactory', '$http', function($rootScope, authFactory, $http) {
+    function fetchUserInfo() {
+        // function to fecth user account info from server
+        if (authFactory.loggedIn()) {
+            $http({
+                'url': '/api/user/',
+                'method': 'GET'
+            }).then(function(response) {
+                authFactory.setUser(response.data);
+            }, function(response) {
+                authFactory.logout();
+            });
+        }
     }
+
+    // try to fetch user info immediately
+    fetchUserInfo();
+
+    // listen for login event and fetch user info
+    $rootScope.$onRootScope('login', function() {
+        var token = authFactory.getToken();
+        if (typeof token !== 'undefined' && token.length > 0) {
+            fetchUserInfo();
+        }
+    });
 }]);

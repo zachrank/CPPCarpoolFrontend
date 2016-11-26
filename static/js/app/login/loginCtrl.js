@@ -38,8 +38,6 @@ loginCtrl.controller('loginCtrl', ['$scope', '$rootScope', '$http', 'authFactory
                 'data': $.param({'email': vm.loginEmail, 'password': vm.loginPassword})
             }).then(function(response) {
                 authFactory.setToken(response.data.token);
-                delete response.data.token;
-                authFactory.setUser(response.data);
                 vm.error = false;
                 vm.working = false;
 
