@@ -34,7 +34,7 @@ search.controller('searchCtrl', ['$scope', '$http', 'authFactory', function($sco
         vm.loading = true;
 
         $http({
-            'url': '/api/findRides/',
+            'url': '/api/search/',
             'method': 'GET'
         }).then(function(response){
             vm.results = response.data.results;
