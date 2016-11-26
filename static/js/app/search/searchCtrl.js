@@ -15,9 +15,11 @@ search.controller('searchCtrl', ['$scope', '$http', 'authFactory', function($sco
         hour = parseInt(split[0]);
         minute = split[1];
         suffix = " am";
+        if (hour > 11 && hour !== 24) {
+            suffix = " pm";
+        }
         if (hour > 12) {
             hour -= 12;
-            suffix = " pm";
         }
         return hour + ":" + minute + suffix;
     }
