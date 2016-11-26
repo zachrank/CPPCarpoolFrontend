@@ -14,10 +14,6 @@
 .search-result-image {
     min-width: 64px;
     height: 64px;
-    border-radius: 5px;
-    background: url('/images/profile-default.png');
-    background-size: contain;
-    background-color: #ddd;
 }
 
 .search-result-content {

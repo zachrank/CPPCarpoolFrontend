@@ -16,21 +16,6 @@
     font-size: 24px;
 }
 
-.profile-image-container {
-    background: url('/images/profile-default.png');
-    background-size: contain;
-    margin: 0px auto;
-    border-radius: 10px;
-    background-color: #ddd;
-    margin-bottom: 10px;
-}
-
-.profile-image-container > img {
-    /* enforce square aspect ratio */
-    width: 100%;
-    margin-bottom: 100%;
-}
-
 .profile-name {
     font-size: 24px;
     margin: 0px 5px 5px 5px;

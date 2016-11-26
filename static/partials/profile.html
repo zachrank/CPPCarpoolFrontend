@@ -10,7 +10,9 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-12">
                     <div class="profile-image-container">
-                        <img data-ng-src="{{profileVm.data.picture}}">
+                        <div class="profile-image-wrapper">
+                            <img data-ng-if="profileVm.data.picture.length" data-ng-src="data:image/jpeg;base64,{{profileVm.data.picture}}">
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-12">

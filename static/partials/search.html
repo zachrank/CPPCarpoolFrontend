@@ -27,7 +27,11 @@
             <div class="search-results">
                 <div class="search-result" data-ng-repeat="r in searchVm.results">
                     <a data-ng-href="#/profile/{{r.cppusername}}" class="search-result-image">
-
+                        <div class="profile-image-container">
+                            <div class="profile-image-wrapper">
+                                <img data-ng-if="r.picture.length" data-ng-src="data:image/jpeg;base64,{{r.picture}}">
+                            </div>
+                        </div>
                     </a>
                     <div class="search-result-content">
                         <div class="search-result-topline">
