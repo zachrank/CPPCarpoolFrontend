@@ -68,9 +68,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="profile-review-compose">
+                <div class="profile-review-compose" data-ng-show="!profileVm.myProfile">
+                    <div class="profile-review-compose-divider"></div>
                     <!-- compose button -->
-                    <div class="pull-right button" data-ng-click="profileVm.reviewing = true;" data-ng-show="!profileVm.reviewing && !profileVm.myProfile">
+                    <div class="pull-right button" data-ng-click="profileVm.reviewing = true;"  data-ng-show="!profileVm.reviewing">
                         <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Write a Review
                     </div>
                     <!-- composing elements -->

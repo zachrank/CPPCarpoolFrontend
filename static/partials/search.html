@@ -16,7 +16,7 @@
         <div class="col-sm-12 col-md-9">
             <div class="search-topbar">
                 <span data-ng-show="searchVm.loading && !searchVm.error"><span class="spinner-icon nomargin"></span>&nbsp;Searching...</span>
-                <span data-ng-show="!searchVm.loading && !searchVm.error">Found {{searchVm.results.length}} user{{searchVm.results.length === 1 ? '':'s'}} near you.</span>
+                <span data-ng-show="!searchVm.loading && !searchVm.error">We found {{searchVm.results.length}} user{{searchVm.results.length === 1 ? '':'s'}} near you.</span>
                 <span style="color:red;" data-ng-show="!searchVm.loading && searchVm.error">Error loading search results</span>
             </div>
             <div class="search-results">
