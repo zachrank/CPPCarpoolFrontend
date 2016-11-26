@@ -44,6 +44,21 @@
                         frameborder="0" style="border:0"
                         data-ng-src="{{ profileVm.mapsUrl }}" allowfullscreen>
                     </iframe>
+                    <div class="profile-map-loading">
+                        <span class="spinner-icon"></span>&nbsp;&nbsp;Loading Map...
+                    </div>
+                </div>
+                <div class="profile-schedule">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4>Their Schedule</h4>
+                            <hr>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>Your Schedule</h4>
+                            <hr>
+                        </div>
+                    </div>
                 </div>
                 <div class="profile-warntext" data-ng-if="profileVm.data && !profileVm.data.profilecomplete">
                     User has not completed their profile.
@@ -71,7 +86,6 @@
                     </div>
                 </div>
                 <div class="profile-review-compose" data-ng-show="!profileVm.myProfile">
-                    <div class="profile-review-compose-divider"></div>
                     <!-- compose button -->
                     <div class="pull-right button" data-ng-click="profileVm.reviewing = true;"  data-ng-show="!profileVm.reviewing">
                         <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Write a Review

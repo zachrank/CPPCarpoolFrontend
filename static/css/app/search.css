@@ -61,6 +61,7 @@
     background-image: linear-gradient(to bottom,#563d7c 0,#6f5499 100%);
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#563d7c', endColorstr='#6F5499', GradientType=0);
     background-repeat: repeat-x;
+    text-shadow: 1px 1px 6px rgba(0,0,0,.5);
 }
 
 .search-result-schedule {
