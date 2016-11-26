@@ -44,3 +44,11 @@
 .search-preferences {
     font-size: 16px;
 }
+
+.search-incomplete {
+    width: 100%;
+    margin: 150px 0px;
+    text-align: center;
+    font-size: 18px;
+    color: #666;
+}
