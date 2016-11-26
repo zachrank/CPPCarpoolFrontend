@@ -10,6 +10,18 @@ search.controller('searchCtrl', ['$scope', '$http', 'authFactory', function($sco
         'Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'
     ];
 
+    function parseTime(t) {
+        var split = t.split(':');
+        hour = parseInt(split[0]);
+        minute = split[1];
+        suffix = " am";
+        if (hour > 12) {
+            hour -= 12;
+            suffix = " pm";
+        }
+        return hour + ":" + minute + suffix;
+    }
+
     function load() {
         var user = authFactory.getUser();
         if (typeof user === "undefined" || !user.profilecomplete) {
@@ -34,8 +46,8 @@ search.controller('searchCtrl', ['$scope', '$http', 'authFactory', function($sco
                     if (r.schedule[j].arrive !== null && r.schedule[j].depart !== null) {
                         processedSched.push({
                             'day': dayOfWeekMap[j],
-                            'arrive': r.schedule[j].arrive.slice(0, 5),
-                            'depart': r.schedule[j].depart.slice(0, 5)
+                            'arrive': parseTime(r.schedule[j].arrive),
+                            'depart': parseTime(r.schedule[j].depart)
                         });
                     }
                 }
