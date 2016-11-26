@@ -1,5 +1,7 @@
 <div class="profile-container container">
-    <div class="profile-loading-overlay" data-ng-show="profileVm.loading"></div>
+    <div class="profile-loading-overlay" data-ng-show="profileVm.loading">
+        <span class="spinner-icon large"></span>&nbsp;&nbsp;Loading...
+    </div>
     <div class="profile-loading-overlay" data-ng-show="!profileVm.loading && profileVm.error">
         <span class="glyphicon glyphicon-warning-sign" style="color:red;"></span>&nbsp;&nbsp;error loading profile data
     </div>
@@ -8,7 +10,9 @@
             <div class="row">
                 <div class="col-xs-6 col-sm-12">
                     <div class="profile-image-container">
-                        <img data-ng-src="{{profileVm.data.picture}}">
+                        <div class="profile-image-wrapper">
+                            <img data-ng-if="profileVm.data.picture.length" data-ng-src="data:image/jpeg;base64,{{profileVm.data.picture}}">
+                        </div>
                     </div>
                 </div>
                 <div class="col-xs-6 col-sm-12">
@@ -22,6 +26,7 @@
                     <div class="profile-rating">
                         Rating
                         <div data-ng-if="profileVm.data.stars" data-stars="profileVm.data.stars"></div>
+                        <div style="font-size:14px;" data-ng-show="!profileVm.data.stars">No reviews</div>
                     </div>
                 </div>
             </div>
@@ -65,9 +70,10 @@
                         </div>
                     </div>
                 </div>
-                <div class="profile-review-compose">
+                <div class="profile-review-compose" data-ng-show="!profileVm.myProfile">
+                    <div class="profile-review-compose-divider"></div>
                     <!-- compose button -->
-                    <div class="pull-right button" data-ng-click="profileVm.reviewing = true;" data-ng-show="!profileVm.reviewing && !profileVm.myProfile">
+                    <div class="pull-right button" data-ng-click="profileVm.reviewing = true;"  data-ng-show="!profileVm.reviewing">
                         <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Write a Review
                     </div>
                     <!-- composing elements -->

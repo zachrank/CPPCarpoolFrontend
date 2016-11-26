@@ -1,0 +1,60 @@
+<div class="jumbotron search-jumbotron">
+    <div class="container">
+        <div class="col-xs-12">
+            <h1><span class="glyphicon glyphicon-search"></span>&nbsp;Find a Ride</h1>
+            <p>
+                Search for other users near you
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row" data-ng-show="!searchVm.profilecomplete">
+        <div class="col-xs-12">
+            <div class="search-incomplete">
+                You must <a href=""> complete your profile</a> before you can search.
+            </div>
+        </div>
+    </div>
+    <div class="row" data-ng-show="searchVm.profilecomplete">
+        <div class="col-sm-12 col-md-9">
+            <div class="search-topbar">
+                <span data-ng-show="searchVm.loading && !searchVm.error"><span class="spinner-icon nomargin"></span>&nbsp;Searching...</span>
+                <span data-ng-show="!searchVm.loading && !searchVm.error">We found {{searchVm.results.length}} user{{searchVm.results.length === 1 ? '':'s'}} near you.</span>
+                <span style="color:red;" data-ng-show="!searchVm.loading && searchVm.error">Error loading search results</span>
+            </div>
+            <div class="search-results">
+                <div class="search-result" data-ng-repeat="r in searchVm.results">
+                    <a data-ng-href="#/profile/{{r.cppusername}}" class="search-result-image">
+                        <div class="profile-image-container">
+                            <div class="profile-image-wrapper">
+                                <img data-ng-if="r.picture.length" data-ng-src="data:image/jpeg;base64,{{r.picture}}">
+                            </div>
+                        </div>
+                    </a>
+                    <div class="search-result-content">
+                        <div class="search-result-topline">
+                            <a data-ng-href="#/profile/{{r.cppusername}}" data-ng-bind="r.fullname"></a>
+                            &nbsp;
+                            <span data-stars="r.stars"></span>
+                            <span class="search-result-city">
+                                <span class="glyphicon glyphicon-home"></span>&nbsp;{{r.city}}
+                            </span>
+                        </div>
+                        <div>
+                            {{r.reviewCount}} review{{r.reviewCount === 1 ? '' : 's' }} - {{r.dist}} miles
+                        </div>
+                        <div class="search-result-schedule">
+                            <div data-ng-repeat="s in r.schedule" class="schedule-row">
+                                <div class="schedule-row-container">
+                                    <div class="schedule-row-day">{{ s.day }}:</div> {{ s.arrive }} - {{ s.depart }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

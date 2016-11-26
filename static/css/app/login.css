@@ -98,3 +98,7 @@
 .login-stage.shift {
     left: -200%;
 }
+
+.create-account {
+    margin-bottom: 100px;
+}
