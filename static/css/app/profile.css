@@ -136,3 +136,23 @@
 .profile-delete {
     cursor: pointer;
 }
+
+.profile-prefs {
+    margin-bottom: 20px;
+}
+
+.profile-pref {
+    margin-bottom: 10px;
+}
+
+.profile-pref-name {
+    color:#666;
+}
+
+.profile-pref-val {
+    font-size: 16px;
+}
+
+.profile-schedule {
+    margin-bottom: 20px;
+}

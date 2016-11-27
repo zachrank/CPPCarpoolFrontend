@@ -75,6 +75,31 @@
                             </div>
                         </div>
                     </div>
+                    <div class="profile-prefs">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h4>Preferences</h4>
+                                <hr>
+                                <div class="profile-pref">
+                                    <div class="profile-pref-name">
+                                        Driving
+                                    </div>
+                                    <div class="profile-pref-val" data-ng-show="profileVm.data.drivingpref === 0">Prefers to drive.</div>
+                                    <div class="profile-pref-val" data-ng-show="profileVm.data.drivingpref === 1">Prefers to ride.</div>
+                                    <div class="profile-pref-val" data-ng-show="profileVm.data.drivingpref === 2">Prefers to switch off.</div>
+                                </div>
+
+                                <div class="profile-pref">
+                                    <div class="profile-pref-name">
+                                        Distance
+                                    </div>
+                                    <div class="profile-pref-val">
+                                        <span data-ng-bind="profileVm.data.maxdist"></span> miles.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="profile-warntext" data-ng-if="profileVm.data && !profileVm.data.profilecomplete">
                     User has not completed their profile.

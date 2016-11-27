@@ -45,6 +45,9 @@
                         <div>
                             {{r.reviewCount}} review{{r.reviewCount === 1 ? '' : 's' }} - {{r.dist}} miles
                         </div>
+                        <div class="search-result-pref" data-ng-show="r.drivingpref === 0">Prefers to drive</div>
+                        <div class="search-result-pref" data-ng-show="r.drivingpref === 1">Prefers to ride</div>
+                        <div class="search-result-pref" data-ng-show="r.drivingpref === 2">Prefers to switch off</div>
                         <div class="search-result-schedule">
                             <div data-ng-repeat="s in r.schedule" class="schedule-row">
                                 <div class="schedule-row-container">
