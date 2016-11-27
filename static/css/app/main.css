@@ -218,3 +218,26 @@ a:hover {
   width: 100%;
   height: 100%;
 }
+
+.nav-picture-wrapper {
+  height: 32px;
+  width: 32px;
+  display: inline-block;
+}
+
+.nav-picture-container {
+  display: inline-block;
+  width: 32px;
+  height: 0px;
+  margin-right: 5px;
+}
+
+.nav-picture-align {
+  height: 32px;
+  width: 32px;
+  display: inline-block;
+  position: absolute;
+  top: 9px;
+  overflow: hidden;
+  border-radius: 3px;
+}

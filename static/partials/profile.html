@@ -38,25 +38,27 @@
                 </li>
             </ul>
             <div data-ng-show="profileVm.tab === 0">
-                <div class="profile-map" data-ng-if="profileVm.data && profileVm.data.profilecomplete">
-                    <iframe
-                        class="profile-map-frame"
-                        frameborder="0" style="border:0"
-                        data-ng-src="{{ profileVm.mapsUrl }}" allowfullscreen>
-                    </iframe>
-                    <div class="profile-map-loading">
-                        <span class="spinner-icon"></span>&nbsp;&nbsp;Loading Map...
-                    </div>
-                </div>
-                <div class="profile-schedule">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h4>Their Schedule</h4>
-                            <hr>
+                <div  data-ng-if="profileVm.data && profileVm.data.profilecomplete">
+                    <div class="profile-map">
+                        <iframe
+                            class="profile-map-frame"
+                            frameborder="0" style="border:0"
+                            data-ng-src="{{ profileVm.mapsUrl }}" allowfullscreen>
+                        </iframe>
+                        <div class="profile-map-loading">
+                            <span class="spinner-icon"></span>&nbsp;&nbsp;Loading Map...
                         </div>
-                        <div class="col-sm-6">
-                            <h4>Your Schedule</h4>
-                            <hr>
+                    </div>
+                    <div class="profile-schedule">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4>Their Schedule</h4>
+                                <hr>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4>Your Schedule</h4>
+                                <hr>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,53 @@
+<div class="profile-container container">
+    <div class="profile-loading-overlay" data-ng-show="settingsVm.loading">
+        <span class="spinner-icon large"></span>&nbsp;&nbsp;Loading...
+    </div>
+    <div class="profile-loading-overlay" data-ng-show="!settingsVm.loading && settingsVm.error">
+        <span class="glyphicon glyphicon-warning-sign" style="color:red;"></span>&nbsp;&nbsp;error loading data
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <div class="row">
+                <div class="col-xs-6 col-sm-12">
+                    <div class="profile-image-container">
+                        <div class="profile-image-wrapper" data-ng-click="settingsVm.uploadPicture()">
+                            <img data-ng-if="settingsVm.data.picture.length" data-ng-src="data:image/jpeg;base64,{{settingsVm.data.picture}}">
+                            <div class="settings-image-overlay" data-ng-show="!settingsVm.uploading">
+                                <span class="glyphicon glyphicon-camera"></span>&nbsp;&nbsp;upload new picture
+                            </div>
+                            <div class="settings-image-loading-overlay" data-ng-show="settingsVm.uploading">
+                                <span class="spinner-icon"></span>&nbsp;&nbsp;Uploading...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-12">
+                    <div class="profile-name" data-ng-bind="settingsVm.data.fullname"></div>
+                    <div class="profile-email" data-ng-bind="settingsVm.data.cppemail"></div>
+                    <div data-ng-show="settingsVm.data.timestamp">
+                        <hr>
+                        Joined {{settingsVm.data.timestamp | date : 'longDate'}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-9">
+            <ul class="nav nav-tabs">
+                <li role="presentation" data-ng-class="{'active': settingsVm.tab === 0}" data-ng-click="settingsVm.setTab(0)">
+                    <a href="">Overview</a>
+                </li>
+                <li role="presentation" data-ng-class="{'active': settingsVm.tab === 1}" data-ng-click="settingsVm.setTab(1)">
+                    <a href="">Messages</a>
+                </li>
+            </ul>
+            <div data-ng-show="settingsVm.tab === 0">
+                Overview
+            </div>
+            <div data-ng-show="settingsVm.tab === 1">
+                Messages
+            </div>
+        </div>
+    </div>
+</div>
+
+<input id="hidden-file-upload" type="file" name="picture" accept="image/*">
