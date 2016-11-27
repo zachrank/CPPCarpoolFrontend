@@ -108,7 +108,7 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
                         'headers': {'Content-Type': undefined},
                         'data': payload
                     }).then(function(response) {
-                        // do a silent reload of user data.
+                        // do a silent reload of user data to get picture
                         // the load function will reset vm.uploading and vm.uploadError
                         load(true);
                         vm.formErrorText = "";
@@ -216,15 +216,18 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
             'data': $.param(submitData)
         }).then(function(response) {
             vm.formErrorText = "";
-            vm.formMessageText = "Save successful!";
+            var text = "Save successful!";
             if (!vm.data.profilecomplete) {
-                vm.formMessageText += " Profile complete.";
+                text += " Profile complete.";
             }
+            showMessage(text);
             vm.saving = false;
             vm.saveError = false;
+
+            // load back fresh user data
             load();
         }, function(response) {
-            vm.formErrorText = "Error saving profile!";
+            showError("Error saving profile!");
             vm.formMessageText = "";
             vm.saving = false;
             vm.saveError = true;
@@ -239,12 +242,12 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
 
     var showError = function(message) {
         vm.formErrorText = message;
-        $("html, body").animate({ scrollTop: 0 }, "fast");
+        $("html, body").animate({ scrollTop: 0 }, 200);
     };
 
     var showMessage = function(message) {
-        vm.formErrorText = message;
-        $("html, body").animate({ scrollTop: 0 }, "fast");
+        vm.formMessageText = message;
+        $("html, body").animate({ scrollTop: 0 }, 200);
     };
 
     var load = function(silent) {
