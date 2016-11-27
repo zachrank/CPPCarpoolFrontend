@@ -56,18 +56,18 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     // maps key usage is restricted to *.cppcarpool.com domains
     var mapsKey = 'AIzaSyCMycxWDmmKHTDK4xTFzgrjTqarniV8LLw';
 
-    var reset = function() {
+    var resetReview = function() {
         vm.reviewing = false;
         vm.newReviewStars = 0;
         vm.newReviewStarsDisplay = 0;
         vm.newReviewContent = "";
         vm.reviewError = "";
     };
-    reset();
+    resetReview();
 
     vm.setTab = function(tab) {
         vm.tab = tab;
-        reset();
+        resetReview();
     };
 
     vm.submitReview = function() {
@@ -91,8 +91,7 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
                 'content': vm.newReviewContent
             })
         }).then(function(response) {
-            vm.reviewError = "";
-            vm.reviewing = false;
+            resetReview();
             load();
         }, function(response) {
             vm.reviewError = response.data;
