@@ -38,25 +38,66 @@
                 </li>
             </ul>
             <div data-ng-show="profileVm.tab === 0">
-                <div class="profile-map" data-ng-if="profileVm.data && profileVm.data.profilecomplete">
-                    <iframe
-                        class="profile-map-frame"
-                        frameborder="0" style="border:0"
-                        data-ng-src="{{ profileVm.mapsUrl }}" allowfullscreen>
-                    </iframe>
-                    <div class="profile-map-loading">
-                        <span class="spinner-icon"></span>&nbsp;&nbsp;Loading Map...
-                    </div>
-                </div>
-                <div class="profile-schedule">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h4>Their Schedule</h4>
-                            <hr>
+                <div  data-ng-if="profileVm.data && profileVm.data.profilecomplete">
+                    <div class="profile-map">
+                        <iframe
+                            class="profile-map-frame"
+                            frameborder="0" style="border:0"
+                            data-ng-src="{{ profileVm.mapsUrl }}" allowfullscreen>
+                        </iframe>
+                        <div class="profile-map-loading">
+                            <span class="spinner-icon"></span>&nbsp;&nbsp;Loading Map...
                         </div>
-                        <div class="col-sm-6">
-                            <h4>Your Schedule</h4>
-                            <hr>
+                    </div>
+                    <div class="profile-schedule">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <h4>Their Schedule</h4>
+                                <hr>
+                                <div class="search-result-schedule">
+                                    <div data-ng-repeat="s in profileVm.data.schedule" class="schedule-row">
+                                        <div class="schedule-row-container full">
+                                            <div class="schedule-row-day">{{ s.day }}:</div> {{ s.arrive }} - {{ s.depart }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <h4>Your Schedule</h4>
+                                <hr>
+                                <div class="search-result-schedule">
+                                    <div data-ng-repeat="s in profileVm.myUser.schedule" class="schedule-row">
+                                        <div class="schedule-row-container full">
+                                            <div class="schedule-row-day">{{ s.day }}:</div> {{ s.arrive }} - {{ s.depart }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-prefs">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <h4>Preferences</h4>
+                                <hr>
+                                <div class="profile-pref">
+                                    <div class="profile-pref-name">
+                                        Driving
+                                    </div>
+                                    <div class="profile-pref-val" data-ng-show="profileVm.data.drivingpref === 0">Prefers to drive.</div>
+                                    <div class="profile-pref-val" data-ng-show="profileVm.data.drivingpref === 1">Prefers to ride.</div>
+                                    <div class="profile-pref-val" data-ng-show="profileVm.data.drivingpref === 2">Prefers to switch off.</div>
+                                </div>
+
+                                <div class="profile-pref">
+                                    <div class="profile-pref-name">
+                                        Distance
+                                    </div>
+                                    <div class="profile-pref-val">
+                                        <span data-ng-bind="profileVm.data.maxdist"></span> miles.
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -78,7 +119,7 @@
                             </div>
                             <div class="profile-review-content">
                                 <div class="profile-review-topline">
-                                    <span class="profile-review-name" data-ng-bind="r.reviewer_name"></span>&nbsp;&nbsp;gave&nbsp;&nbsp;<span data-stars="r.stars"></span>&nbsp;&nbsp;<span data-ng-show="r.reviewer_email === profileVm.myCppEmail" class="profile-delete glyphicon glyphicon-trash" data-ng-click="profileVm.deleteReview(r.id)"></span>
+                                    <span class="profile-review-name" data-ng-bind="r.reviewer_name"></span>&nbsp;&nbsp;gave&nbsp;&nbsp;<span data-stars="r.stars"></span>&nbsp;&nbsp;<span data-ng-show="r.reviewer_email === profileVm.myUser.cppemail" class="profile-delete glyphicon glyphicon-trash" data-ng-click="profileVm.deleteReview(r.id)"></span>
                                 </div>
                                 <p data-ng-bind="r.content"></p>
                             </div>

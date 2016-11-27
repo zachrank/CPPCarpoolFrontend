@@ -23,6 +23,9 @@ loginCtrl.controller('loginCtrl', ['$scope', '$rootScope', '$http', 'authFactory
             }).then(function(response) {
                 vm.state = 1;
                 vm.loginData = response.data;
+                if (typeof vm.loginData.picture !== 'undefined' && vm.loginData.picture !== null) {
+                    vm.loginData.picture = 'data:image/jpeg;base64,' + vm.loginData.picture;
+                }
                 vm.error = false;
                 vm.working = false;
             }, function(response) {

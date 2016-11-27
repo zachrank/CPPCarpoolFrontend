@@ -1,8 +1,21 @@
 .register-container {
-    margin-top: 100px;
+    margin: 100px 0px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+.register-loading-overlay {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background: rgba(255,255,255,.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .register-box {
@@ -11,7 +24,7 @@
     position: relative;
     background-color: #f7f7f7;
     padding: 40px;
-    margin: 0 auto 25px;
+    margin: 0px auto;
     -moz-border-radius: 2px;
     -webkit-border-radius: 2px;
     border-radius: 2px;
@@ -43,4 +56,14 @@
 
 .register-spacer {
     height: 20px;
+}
+
+.register-message {
+    color:#5495d0;
+    font-size:16px;
+}
+
+.register-message.error {
+    color:#a91d1d;
+    font-size:16px;
 }

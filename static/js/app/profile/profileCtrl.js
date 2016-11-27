@@ -5,12 +5,48 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     vm.data = null;
     vm.loading = true;
     vm.error = false;
-    vm.myCppEmail = authFactory.getUser().cppemail;
-    vm.myProfile = (vm.myCppEmail === $routeParams.user + '@cpp.edu');
+    var dayOfWeekMap = [
+        'Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'
+    ];
+
+    function parseTime(t) {
+        var split = t.split(':');
+        hour = parseInt(split[0]);
+        minute = split[1];
+        suffix = " am";
+        if (hour > 11 && hour !== 24) {
+            suffix = " pm";
+        }
+        if (hour > 12) {
+            hour -= 12;
+        }
+        return hour + ":" + minute + suffix;
+    }
+
+    var copyUserInfo = function() {
+        vm.myUser = angular.copy(authFactory.getUser());
+        if (typeof vm.myUser.id === "undefined") {
+            return;
+        }
+        vm.myProfile = (vm.myUser.cppemail === $routeParams.user + '@cpp.edu');
+        var processedSched = [];
+        for (var j = 0; j < vm.myUser.schedule.length; j++) {
+            if (vm.myUser.schedule[j].arrive !== null && vm.myUser.schedule[j].depart !== null) {
+                processedSched.push({
+                    'day': dayOfWeekMap[j],
+                    'arrive': parseTime(vm.myUser.schedule[j].arrive),
+                    'depart': parseTime(vm.myUser.schedule[j].depart)
+                });
+            }
+        }
+        vm.myUser.schedule = processedSched;
+    };
+
+    copyUserInfo();
     $scope.$onRootScope('userChange', function() {
-        vm.myCppEmail = authFactory.getUser().cppemail;
-        vm.myProfile = (vm.myCppEmail === $routeParams.user + '@cpp.edu');
+        copyUserInfo();
     });
+
     vm.tab = 0;
     vm.tabs = [
         'Overview',
@@ -20,18 +56,18 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     // maps key usage is restricted to *.cppcarpool.com domains
     var mapsKey = 'AIzaSyCMycxWDmmKHTDK4xTFzgrjTqarniV8LLw';
 
-    var reset = function() {
+    var resetReview = function() {
         vm.reviewing = false;
         vm.newReviewStars = 0;
         vm.newReviewStarsDisplay = 0;
         vm.newReviewContent = "";
         vm.reviewError = "";
     };
-    reset();
+    resetReview();
 
     vm.setTab = function(tab) {
         vm.tab = tab;
-        reset();
+        resetReview();
     };
 
     vm.submitReview = function() {
@@ -55,8 +91,7 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
                 'content': vm.newReviewContent
             })
         }).then(function(response) {
-            vm.reviewError = "";
-            vm.reviewing = false;
+            resetReview();
             load();
         }, function(response) {
             vm.reviewError = response.data;
@@ -103,6 +138,19 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
                 }
                 vm.data.stars = total / vm.data.reviews.length;
             }
+
+            // process schedule
+            var processedSched = [];
+            for (var j = 0; j < vm.data.schedule.length; j++) {
+                if (vm.data.schedule[j].arrive !== null && vm.data.schedule[j].depart !== null) {
+                    processedSched.push({
+                        'day': dayOfWeekMap[j],
+                        'arrive': parseTime(vm.data.schedule[j].arrive),
+                        'depart': parseTime(vm.data.schedule[j].depart)
+                    });
+                }
+            }
+            vm.data.schedule = processedSched;
 
             vm.loading = false;
         }, function() {
