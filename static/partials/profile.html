@@ -54,10 +54,24 @@
                             <div class="col-sm-6">
                                 <h4>Their Schedule</h4>
                                 <hr>
+                                <div class="search-result-schedule">
+                                    <div data-ng-repeat="s in profileVm.data.schedule" class="schedule-row">
+                                        <div class="schedule-row-container full">
+                                            <div class="schedule-row-day">{{ s.day }}:</div> {{ s.arrive }} - {{ s.depart }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-sm-6">
                                 <h4>Your Schedule</h4>
                                 <hr>
+                                <div class="search-result-schedule">
+                                    <div data-ng-repeat="s in profileVm.myUser.schedule" class="schedule-row">
+                                        <div class="schedule-row-container full">
+                                            <div class="schedule-row-day">{{ s.day }}:</div> {{ s.arrive }} - {{ s.depart }}
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,7 +94,7 @@
                             </div>
                             <div class="profile-review-content">
                                 <div class="profile-review-topline">
-                                    <span class="profile-review-name" data-ng-bind="r.reviewer_name"></span>&nbsp;&nbsp;gave&nbsp;&nbsp;<span data-stars="r.stars"></span>&nbsp;&nbsp;<span data-ng-show="r.reviewer_email === profileVm.myCppEmail" class="profile-delete glyphicon glyphicon-trash" data-ng-click="profileVm.deleteReview(r.id)"></span>
+                                    <span class="profile-review-name" data-ng-bind="r.reviewer_name"></span>&nbsp;&nbsp;gave&nbsp;&nbsp;<span data-stars="r.stars"></span>&nbsp;&nbsp;<span data-ng-show="r.reviewer_email === profileVm.myUser.cppemail" class="profile-delete glyphicon glyphicon-trash" data-ng-click="profileVm.deleteReview(r.id)"></span>
                                 </div>
                                 <p data-ng-bind="r.content"></p>
                             </div>

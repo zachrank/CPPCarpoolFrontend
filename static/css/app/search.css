@@ -76,6 +76,10 @@
     padding: 2px 5px;
 }
 
+.schedule-row > .schedule-row-container.full {
+    display: block;
+}
+
 .schedule-row:nth-child(even) > .schedule-row-container {
     background: #eee;
 }
