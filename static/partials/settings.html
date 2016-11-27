@@ -31,6 +31,10 @@
                         <hr>
                         Joined {{settingsVm.data.timestamp | date : 'longDate'}}
                     </div>
+                    <div data-ng-show="!settingsVm.data.profilecomplete">
+                        <hr>
+                        <span class="glyphicon glyphicon-info-sign"></span>&nbsp;&nbsp;Profile incomplete
+                    </div>
                 </div>
             </div>
         </div>
@@ -44,8 +48,9 @@
                 </li>
             </ul>
             <div data-ng-show="settingsVm.tab === 0">
+                <div class="settings-message" data-ng-show="settingsVm.formMessageText.length" data-ng-bind="settingsVm.formMessageText"></div>
+                <div class="settings-error" data-ng-show="settingsVm.formErrorText.length" data-ng-bind="settingsVm.formErrorText"></div>
                 <div class="settings-group-title">Location</div>
-                <div class="settings-group-errortext" data-ng-show="settingsVm.formErrorText.length" data-ng-bind="settingsVm.formErrorText"></div>
                 <div class="settings-group-subtext">
                     <span class="glyphicon glyphicon-eye-close"></span>&nbsp;&nbsp;Your exact location is not visible to others.
                 </div>

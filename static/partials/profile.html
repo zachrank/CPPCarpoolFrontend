@@ -2,6 +2,9 @@
     <div class="profile-loading-overlay" data-ng-show="profileVm.loading">
         <span class="spinner-icon large"></span>&nbsp;&nbsp;Loading...
     </div>
+    <div class="profile-loading-overlay" data-ng-show="profileVm.saving">
+        <span class="spinner-icon large"></span>&nbsp;&nbsp;Saving...
+    </div>
     <div class="profile-loading-overlay" data-ng-show="!profileVm.loading && profileVm.error">
         <span class="glyphicon glyphicon-warning-sign" style="color:red;"></span>&nbsp;&nbsp;error loading profile data
     </div>

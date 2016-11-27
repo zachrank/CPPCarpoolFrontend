@@ -2,13 +2,7 @@ var settings = angular.module('app.settings', []);
 
 settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function($scope, $http, authFactory) {
     var vm = this;
-    vm.formErrorText = "";
-    vm.error = false;
-    vm.loading = false;
-    vm.uploading = false;
-    vm.uploadError = false;
-    vm.saving = false;
-    vm.saveError = false;
+
     vm.tab = 0;
     vm.days = [
         'Sunday',
@@ -19,6 +13,19 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
         'Friday',
         'Saturday'
     ];
+
+    //for displaying messages and errors
+    vm.formErrorText = "";
+    vm.formMessageText = "";
+    // for loading user data
+    vm.error = false;
+    vm.loading = false;
+    // for picture upload
+    vm.uploading = false;
+    vm.uploadError = false;
+    // for saving user data
+    vm.saving = false;
+    vm.saveError = false;
 
     $scope.$onRootScope('userChange', function() {
         vm.data = authFactory.getUser();
@@ -196,11 +203,17 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
             'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
             'data': $.param(submitData)
         }).then(function(response) {
-            console.log(response);
+            vm.formErrorText = "";
+            vm.formMessageText = "Save successful!";
+            if (!vm.data.profilecomplete) {
+                vm.formMessageText += " Profile complete.";
+            }
             vm.saving = false;
             vm.saveError = false;
+            load();
         }, function(response) {
-            console.log(response);
+            vm.formErrorText = "Error saving profile!";
+            vm.formMessageText = "";
             vm.saving = false;
             vm.saveError = true;
         });
@@ -212,10 +225,14 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
         }
     };
 
-
     var showError = function(message) {
         vm.formErrorText = message;
-        window.scrollTo(0, 0);
+        $("html, body").animate({ scrollTop: 0 }, "fast");
+    };
+
+    var showMessage = function(message) {
+        vm.formErrorText = message;
+        $("html, body").animate({ scrollTop: 0 }, "fast");
     };
 
     var load = function(silent) {
@@ -238,4 +255,5 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
             vm.uploadError = false;
         });
     };
+    load();
 }]);
