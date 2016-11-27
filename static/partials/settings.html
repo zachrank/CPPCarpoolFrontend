@@ -18,6 +18,9 @@
                             <div class="settings-image-loading-overlay" data-ng-show="settingsVm.uploading">
                                 <span class="spinner-icon"></span>&nbsp;&nbsp;Uploading...
                             </div>
+                            <div class="settings-image-loading-overlay" data-ng-show="!settingsVm.uploading && settingsVm.uploadError">
+                                <span class="glyphicon glyphicon-warning-sign" style="color:red;"></span>&nbsp;&nbsp;error uploading
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -41,7 +44,164 @@
                 </li>
             </ul>
             <div data-ng-show="settingsVm.tab === 0">
-                Overview
+                <div class="settings-group-title">Location</div>
+                <div class="settings-group-errortext" data-ng-show="settingsVm.formErrorText.length" data-ng-bind="settingsVm.formErrorText"></div>
+                <div class="settings-group-subtext">
+                    <span class="glyphicon glyphicon-eye-close"></span>&nbsp;&nbsp;Your exact location is not visible to others.
+                </div>
+                <form name="locationForm" novalidate>
+                    <div class="settings-input-name">Address Line 1</div>
+                    <input
+                        class="input"
+                        type="text"
+                        placeholder="Enter address line 1"
+                        required
+                        data-ng-trim="true"
+                        data-ng-minlength="1"
+                        data-ng-model="settingsVm.editData.addressline1"
+                        data-ng-model-options="{updateOn: 'blur'}">
+
+                    <div class="settings-input-name">Address Line 2</div>
+                    <input
+                        class="input"
+                        type="text"
+                        placeholder="Enter address line 2"
+                        data-ng-trim="true"
+                        data-ng-minlength="1"
+                        data-ng-model="settingsVm.editData.addressline2"
+                        data-ng-model-options="{updateOn: 'blur'}">
+
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="settings-input-name">City</div>
+                            <input
+                                class="input"
+                                type="text"
+                                placeholder="Enter city"
+                                required
+                                data-ng-trim="true"
+                                data-ng-minlength="1"
+                                data-ng-model="settingsVm.editData.city"
+                                data-ng-model-options="{updateOn: 'blur'}">
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="settings-input-name">Zip</div>
+                            <input
+                                class="input"
+                                type="text"
+                                placeholder="Enter zip code"
+                                required
+                                data-ng-trim="true"
+                                data-ng-minlength="1"
+                                data-ng-model="settingsVm.editData.zip"
+                                data-ng-model-options="{updateOn: 'blur'}">
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <div class="settings-group-title">Schedule</div>
+                <form name="scheduleForm" novalidate>
+                    <div
+                        class="settings-sched-day"
+                        data-ng-class="{'active': settingsVm.editData.schedule[$index].checked}"
+                        data-ng-repeat="day in settingsVm.days">
+                        <label class="settings-sched-label">
+                            {{ day }}&nbsp;&nbsp;<input type="checkbox" data-ng-model="settingsVm.editData.schedule[$index].checked">
+                        </label>
+                        <div class="settings-sched-time-container" data-ng-click="settingsVm.trySelectDay(settingsVm.editData.schedule[$index])">
+                            <div data-ng-if="settingsVm.editData.schedule[$index].checked">
+                                <input
+                                    class="settings-time-input"
+                                    type="text"
+                                    required
+                                    data-ng-trim="true"
+                                    data-ng-pattern="/^\d{1,2}$/"
+                                    data-ng-model="settingsVm.editData.schedule[$index].arriveHour"
+                                    data-ng-model-options="{updateOn: 'blur'}">
+                                :
+                                <input
+                                    class="settings-time-input"
+                                    type="text"
+                                    required
+                                    data-ng-trim="true"
+                                    data-ng-pattern="/^\d{1,2}$/"
+                                    data-ng-model="settingsVm.editData.schedule[$index].arriveMinute"
+                                    data-ng-model-options="{updateOn: 'blur'}">
+                                <select
+                                    class="settings-select"
+                                    required
+                                    data-ng-patter="/^[a|p]m$/"
+                                    data-ng-model="settingsVm.editData.schedule[$index].arrivePeriod">
+                                    <option value="am">am</option>
+                                    <option value="pm">pm</option>
+                                </select>
+                                &nbsp;to&nbsp;
+                                <input
+                                    class="settings-time-input"
+                                    type="text"
+                                    required
+                                    data-ng-trim="true"
+                                    data-ng-pattern="/^\d{1,2}$/"
+                                    data-ng-model="settingsVm.editData.schedule[$index].departHour"
+                                    data-ng-model-options="{updateOn: 'blur'}">
+                                :
+                                <input
+                                    class="settings-time-input"
+                                    type="text"
+                                    required
+                                    data-ng-trim="true"
+                                    data-ng-pattern="/^\d{1,2}$/"
+                                    data-ng-model="settingsVm.editData.schedule[$index].departMinute"
+                                    data-ng-model-options="{updateOn: 'blur'}">
+                                <select
+                                    class="settings-select"
+                                    required
+                                    data-ng-patter="/^[a|p]m$/"
+                                    data-ng-model="settingsVm.editData.schedule[$index].departPeriod">
+                                    <option value="am">am</option>
+                                    <option value="pm">pm</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br>
+                <div class="settings-group-title">Preferences</div>
+                <form name="prefForm" novalidate>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="settings-input-name">Driving Preference</div>
+                            <label class="setting-radio">
+                                <input type="radio" ng-model="settingsVm.editData.drivingpref" value="0">&nbsp;&nbsp;I prefer to drive.
+                            </label>
+                            <label class="setting-radio">
+                                <input type="radio" ng-model="settingsVm.editData.drivingpref" value="1">&nbsp;&nbsp;I prefer to ride.
+                            </label>
+                            <label class="setting-radio">
+                                <input type="radio" ng-model="settingsVm.editData.drivingpref" value="2">&nbsp;&nbsp;I prefer to switch off.
+                            </label>
+                        </div>
+                        <div class="col-xs-12 col-sm-6">
+                            <div class="settings-input-name">Max Distance</div>
+                            <input
+                                class="input"
+                                type="text"
+                                placeholder="How far are you willing to drive?"
+                                required
+                                data-ng-trim="true"
+                                data-ng-minlength="1"
+                                data-ng-patter="/^\d+$/"
+                                data-ng-model="settingsVm.editData.maxdist"
+                                data-ng-model-options="{updateOn: 'blur'}">
+                        </div>
+                    </div>
+                </form>
+
+                <div class="settings-buttons">
+                    <div class="pull-right button" data-ng-click="settingsVm.save()">
+                        Save Changes
+                    </div>
+                </div>
             </div>
             <div data-ng-show="settingsVm.tab === 1">
                 Messages
