@@ -1,7 +1,21 @@
 <div class="register-container">
     <div class="register-box">
+        <div class="register-loading-overlay" data-ng-show="registerVm.loading">
+            <span class="spinner-icon nomargin"></span>&nbsp;Working...
+        </div>
         <div class="register-title">Register</div>
-        <form name="registerForm" class="register-form" novalidate data-ng-submit="registerVm.register()">
+        <div class="register-message" data-ng-if="registerVm.registerSuccess">
+            Thanks! Check your email for an activation link.
+        </div>
+        <div class="register-message error" data-ng-if="registerVm.registerError">
+            Error registering. Please try again later.
+        </div>
+        <form
+            name="registerForm"
+            class="register-form"
+            novalidate
+            data-ng-submit="registerVm.register()"
+            data-ng-show="!registerVm.registerSuccess && !registerVm.registerError">
             <input
                 class="input"
                 type="text"

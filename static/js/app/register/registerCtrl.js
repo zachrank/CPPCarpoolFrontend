@@ -2,7 +2,9 @@ var register = angular.module('app.register', []);
 
 register.controller('registerCtrl', ['$scope', '$http', function($scope, $http) {
     var vm = this;
-
+    vm.loading = false;
+    vm.registerSuccess = false;
+    vm.registerError = false;
     vm.password = '';
     vm.passwordConfirm = '';
 
@@ -13,9 +15,10 @@ register.controller('registerCtrl', ['$scope', '$http', function($scope, $http) 
     };
 
     vm.register = function() {
-        if (!$scope.registerForm.$valid) {
+        if (!$scope.registerForm.$valid || vm.loading) {
             return;
         }
+        vm.loading = true;
 
         vm.reg.password = vm.password;
 
@@ -25,9 +28,13 @@ register.controller('registerCtrl', ['$scope', '$http', function($scope, $http) 
             'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
             'data': $.param(vm.reg)
         }).then(function(response) {
-            console.log("registered");
+            vm.registerSuccess = true;
+            vm.registerError = false;
+            vm.loading = false;
         }, function(response) {
-            console.log("err");
+            vm.registerSuccess = false;
+            vm.registerError = true;
+            vm.loading = false;
         });
     };
 }]);
