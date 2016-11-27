@@ -52,6 +52,12 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
                 day.arriveHour -= 12;
             }
 
+            // convert to string and pad with 0's
+            day.arriveMinute = '' + day.arriveMinute;
+            if (day.arriveMinute.length === 1) {
+                day.arriveMinute = '0' + day.arriveMinute;
+            }
+
             var departSplit = day.depart.split(':');
             day.departHour = parseInt(departSplit[0]);
             day.departMinute = parseInt(departSplit[1]);
@@ -61,6 +67,12 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
             }
             if (day.departHour > 12) {
                 day.departHour -= 12;
+            }
+
+            // convert to string and pad with 0's
+            day.departMinute = '' + day.departMinute;
+            if (day.departMinute.length === 1) {
+                day.departMinute = '0' + day.departMinute;
             }
         }
     });
