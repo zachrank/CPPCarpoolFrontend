@@ -1,6 +1,6 @@
 var profile = angular.module('app.profile', []);
 
-profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFactory', '$sce', '$q', function($scope, $http, $routeParams, authFactory, $sce, $q) {
+profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFactory', '$sce', '$q', '$timeout', function($scope, $http, $routeParams, authFactory, $sce, $q, $timeout) {
     var vm = this;
     vm.data = null;
     vm.loading = true;
@@ -37,6 +37,9 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
             }).then(function(response) {
                 vm.messages = response.data.results;
                 vm.sending = false;
+                $timeout(function() {
+                    $('.profile-messages-scrollport').scrollTop($('.profile-messages-scrollport')[0].scrollHeight);
+                });
             }, function(response) {
                 vm.messageText = messageTextRemember;
                 vm.messageErrorOverlay = "Error fetching messages.";
