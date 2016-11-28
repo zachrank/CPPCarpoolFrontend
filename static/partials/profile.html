@@ -182,6 +182,7 @@
                                         <div class="profile-message-name">
                                             <span data-ng-show="m.outgoing" data-ng-bind="profileVm.myUser.fullname"></span>
                                             <span data-ng-show="!m.outgoing" data-ng-bind="profileVm.data.fullname"></span>
+                                            <span class="profile-message-timestamp" data-ng-bind="m.timestamp | date : 'short'"></span>
                                         </div>
                                         <div class="profile-message-text" data-ng-bind="m.message"></div>
                                     </div>
