@@ -32,7 +32,7 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
             })
         }).then(function(response) {
             $http({
-                'url': '/api/messages/',
+                'url': '/api/messages/' + $routeParams.user,
                 'method': 'GET'
             }).then(function(response) {
                 vm.messages = response.data.results;
@@ -41,7 +41,6 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
                     $('.profile-messages-scrollport').scrollTop($('.profile-messages-scrollport')[0].scrollHeight);
                 });
             }, function(response) {
-                vm.messageText = messageTextRemember;
                 vm.messageErrorOverlay = "Error fetching messages.";
                 vm.sending = false;
             });
@@ -117,6 +116,12 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     vm.setTab = function(tab) {
         vm.tab = tab;
         resetReview();
+        if (tab === 2) {
+            // scroll to bottom of message history
+            $timeout(function() {
+                $('.profile-messages-scrollport').scrollTop($('.profile-messages-scrollport')[0].scrollHeight);
+            });
+        }
     };
 
     vm.submitReview = function() {
@@ -170,7 +175,7 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
         });
 
         var messagesRequest = $http({
-            'url': '/api/messages/',
+            'url': '/api/messages/' + $routeParams.user,
             'method': 'GET'
         });
 
