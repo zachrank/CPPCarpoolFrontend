@@ -156,3 +156,87 @@
 .profile-schedule {
     margin-bottom: 20px;
 }
+
+.profile-messages {
+    position: relative;
+}
+
+.profile-messages-top {
+    position: relative;
+    overflow: hidden;
+}
+
+.profile-messages-overlay {
+    position: absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    z-index: 1;
+}
+
+.profile-messages-overlay.bg {
+    background: rgba(255,255,255,.5);
+}
+
+.profile-messages-bottom {
+    padding: 20px;
+    background: #f0f0f0;
+    border-top: 1px solid #ddd;
+}
+
+.profile-messages-scrollport {
+    /* hide scrollbar */
+    margin-right: -30px;
+    padding-right: 30px;
+
+    height: 500px;
+    background: #f9f9f9;
+    overflow-y: scroll;
+}
+
+.profile-messages-input-wrapper {
+    overflow: hidden;
+}
+
+.profile-messages-input-wrapper > input {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.profile-messages-button {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.profile-message {
+    display: flex;
+    margin:15px;
+    font-size: 16px;
+}
+
+.profile-message-left {
+    min-width: 64px;
+}
+
+.profile-message-right {
+    margin-left: 15px;
+}
+
+.profile-message-name {
+    color:#4c91ec;
+}
+
+.profile-message-left > .profile-image-container {
+    margin-bottom: 0px;
+}
+
+.profile-messages-bottom-error {
+    margin: 15px 24px;
+    color: red;
+    font-size: 16px;
+}

@@ -9,6 +9,52 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
         'Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'
     ];
 
+    vm.sending = false;
+    vm.messages = [];
+    vm.messageText = "";
+    vm.messageErrorOverlay = "";
+    vm.messageError = "";
+    vm.sendMessage = function() {
+        if (vm.messageText.length === 0 || vm.sending) {
+            return;
+        }
+        vm.sending = true;
+        var messageTextRemember = vm.messageText;
+        vm.messageText = "";
+
+        $http({
+            'url': '/api/messages/',
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
+            'data': $.param({
+                'to_userid': vm.data.id,
+                'message': messageTextRemember
+            })
+        }).then(function(response) {
+            $http({
+                'url': '/api/messages/',
+                'method': 'GET'
+            }).then(function(response) {
+                vm.messages = response.data.results;
+                vm.sending = false;
+            }, function(response) {
+                vm.messageText = messageTextRemember;
+                vm.messageErrorOverlay = "Error fetching messages.";
+                vm.sending = false;
+            });
+        }, function(response) {
+            vm.messageText = messageTextRemember;
+            vm.messageError = "Error sending message.";
+            vm.sending = false;
+        });
+    };
+
+    vm.messageKeypress = function(event) {
+        if (event.which === 13) {
+            vm.sendMessage();
+        }
+    };
+
     function parseTime(t) {
         var split = t.split(':');
         hour = parseInt(split[0]);
@@ -51,7 +97,7 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     vm.tabs = [
         'Overview',
         'Reviews',
-        'Contact'
+        'Message'
     ];
     // maps key usage is restricted to *.cppcarpool.com domains
     var mapsKey = 'AIzaSyCMycxWDmmKHTDK4xTFzgrjTqarniV8LLw';
@@ -120,25 +166,19 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
             'method': 'GET'
         });
 
-        $q.all([userInfoRequest, reviewsRequest]).then(function(responses) {
+        var messagesRequest = $http({
+            'url': '/api/messages/',
+            'method': 'GET'
+        });
+
+        $q.all([userInfoRequest, reviewsRequest, messagesRequest]).then(function(responses) {
             var userInfoResponse = responses[0];
             var reviewsResponse = responses[1];
+            var messagesResponse = responses[2];
 
             // make user info available
             vm.data = userInfoResponse.data;
             vm.mapsUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?key=' + mapsKey + '&q=' + (vm.data.city || 'Cal Poly Pomona'));
-            // make reviews data available
-            vm.data.reviews = reviewsResponse.data.results;
-            //calculate number of stars
-            vm.data.stars = 0.0;
-            if (vm.data.reviews.length > 0) {
-                var total = 0;
-                for (var i = 0; i < vm.data.reviews.length; i++) {
-                    total += vm.data.reviews[i].stars;
-                }
-                vm.data.stars = total / vm.data.reviews.length;
-            }
-
             // process schedule
             var processedSched = [];
             for (var j = 0; j < vm.data.schedule.length; j++) {
@@ -151,6 +191,21 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
                 }
             }
             vm.data.schedule = processedSched;
+
+            // make reviews data available
+            vm.data.reviews = reviewsResponse.data.results;
+            //calculate number of stars
+            vm.data.stars = 0.0;
+            if (vm.data.reviews.length > 0) {
+                var total = 0;
+                for (var i = 0; i < vm.data.reviews.length; i++) {
+                    total += vm.data.reviews[i].stars;
+                }
+                vm.data.stars = total / vm.data.reviews.length;
+            }
+
+            // make messages available
+            vm.messages = messagesResponse.data.results;
 
             vm.loading = false;
         }, function() {
