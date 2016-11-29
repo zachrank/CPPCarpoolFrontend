@@ -1,6 +1,6 @@
 var profile = angular.module('app.profile', []);
 
-profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFactory', '$sce', '$q', function($scope, $http, $routeParams, authFactory, $sce, $q) {
+profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFactory', '$sce', '$q', '$timeout', function($scope, $http, $routeParams, authFactory, $sce, $q, $timeout) {
     var vm = this;
     vm.data = null;
     vm.loading = true;
@@ -8,6 +8,13 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     var dayOfWeekMap = [
         'Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'
     ];
+
+    vm.loadingMessages = false;
+    vm.sending = false;
+    vm.messages = [];
+    vm.messageText = "";
+    vm.messageErrorOverlay = "";
+    vm.messageError = "";
 
     function parseTime(t) {
         var split = t.split(':');
@@ -51,7 +58,7 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     vm.tabs = [
         'Overview',
         'Reviews',
-        'Contact'
+        'Message'
     ];
     // maps key usage is restricted to *.cppcarpool.com domains
     var mapsKey = 'AIzaSyCMycxWDmmKHTDK4xTFzgrjTqarniV8LLw';
@@ -68,6 +75,65 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
     vm.setTab = function(tab) {
         vm.tab = tab;
         resetReview();
+        if (tab === 2) {
+            // load message history
+            vm.fetchMessages();
+        }
+    };
+
+    vm.fetchMessages = function() {
+        if (vm.loadingMessages) {
+            return;
+        }
+        vm.loadingMessages = true;
+
+        $http({
+            'url': '/api/messages/' + $routeParams.user,
+            'method': 'GET'
+        }).then(function(response) {
+            vm.messages = response.data.results;
+            vm.sending = false;
+            vm.loadingMessages = false;
+            // scroll to end of message history
+            $timeout(function() {
+                $('.profile-messages-scrollport').scrollTop($('.profile-messages-scrollport')[0].scrollHeight);
+            });
+        }, function(response) {
+            vm.messageErrorOverlay = "Error fetching messages.";
+            vm.sending = false;
+            vm.loadingMessages = false;
+        });
+    };
+
+    vm.sendMessage = function() {
+        if (vm.messageText.length === 0 || vm.sending) {
+            return;
+        }
+        vm.sending = true;
+        var messageTextRemember = vm.messageText;
+        vm.messageText = "";
+
+        $http({
+            'url': '/api/messages/',
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
+            'data': $.param({
+                'to_userid': vm.data.id,
+                'message': messageTextRemember
+            })
+        }).then(function(response) {
+            vm.fetchMessages();
+        }, function(response) {
+            vm.messageText = messageTextRemember;
+            vm.messageError = "Error sending message.";
+            vm.sending = false;
+        });
+    };
+
+    vm.messageKeypress = function(event) {
+        if (event.which === 13) {
+            vm.sendMessage();
+        }
     };
 
     vm.submitReview = function() {
@@ -120,6 +186,11 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
             'method': 'GET'
         });
 
+        var messagesRequest = $http({
+            'url': '/api/messages/' + $routeParams.user,
+            'method': 'GET'
+        });
+
         $q.all([userInfoRequest, reviewsRequest]).then(function(responses) {
             var userInfoResponse = responses[0];
             var reviewsResponse = responses[1];
@@ -127,18 +198,6 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
             // make user info available
             vm.data = userInfoResponse.data;
             vm.mapsUrl = $sce.trustAsResourceUrl('https://www.google.com/maps/embed/v1/place?key=' + mapsKey + '&q=' + (vm.data.city || 'Cal Poly Pomona'));
-            // make reviews data available
-            vm.data.reviews = reviewsResponse.data.results;
-            //calculate number of stars
-            vm.data.stars = 0.0;
-            if (vm.data.reviews.length > 0) {
-                var total = 0;
-                for (var i = 0; i < vm.data.reviews.length; i++) {
-                    total += vm.data.reviews[i].stars;
-                }
-                vm.data.stars = total / vm.data.reviews.length;
-            }
-
             // process schedule
             var processedSched = [];
             for (var j = 0; j < vm.data.schedule.length; j++) {
@@ -151,6 +210,18 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
                 }
             }
             vm.data.schedule = processedSched;
+
+            // make reviews data available
+            vm.data.reviews = reviewsResponse.data.results;
+            //calculate number of stars
+            vm.data.stars = 0.0;
+            if (vm.data.reviews.length > 0) {
+                var total = 0;
+                for (var i = 0; i < vm.data.reviews.length; i++) {
+                    total += vm.data.reviews[i].stars;
+                }
+                vm.data.stars = total / vm.data.reviews.length;
+            }
 
             vm.loading = false;
         }, function() {

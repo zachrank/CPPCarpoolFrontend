@@ -145,3 +145,91 @@
   padding-left: 9px;
   cursor: pointer;
 }
+
+.settings-convs {
+  position: relative;
+  min-height: 200px;
+  width: 100%
+}
+
+.settings-conv {
+  display: flex;
+  padding: 15px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.settings-conv:nth-child(even) {
+  background: #f9f9f9;
+}
+
+.settings-conv-left {
+  min-width: 64px;
+}
+
+.settings-conv-left > .profile-image-container {
+  margin-bottom: 0px;
+}
+
+.settings-conv-right {
+  margin-left: 15px;
+  flex-grow: 1;
+}
+
+.settings-conv-name {
+  font-size: 16px;
+  color:#4c91ec;
+}
+
+.settings-conv-timestamp {
+    color: #666;
+    font-size: 12px;
+    line-height: 22px;
+    margin-left: 5px;
+}
+
+.settings-conv-badge {
+  float: right;
+  display: inline-block;
+  padding: 2px 9px;
+  background: #4c91ec;
+  color: white;
+  border-radius: 15px;
+  font-size: 12px;
+}
+
+.settings-conv.unread {
+}
+
+.settings-conv-overlay {
+  position: absolute;
+  left:0px;
+  top:0px;
+  width:100%;
+  height:100%;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  z-index: 1;
+  background: rgba(255,255,255,.5);
+}
+
+.settings-conv-container {
+  position: relative;
+}
+
+.settings-button {
+  display: inline-block;
+}
+
+.settings-conv-top {
+  padding: 10px 15px;
+  background: #f0f0f0;
+  border-bottom: 1px solid #ddd;
+  font-size: 16px;
+}
+
+.settings-conv-top-text {
+  margin-left: 10px;
+}

@@ -154,6 +154,56 @@
                     </div>
                 </div>
             </div>
+            <div data-ng-show="profileVm.tab === 2">
+                <div class="profile-messages">
+                    <div class="profile-messages-overlay bg" data-ng-show="profileVm.loadingMessages">
+                        <span class="spinner-icon"></span>&nbsp;&nbsp;Loading...
+                    </div>
+                    <div class="profile-messages-overlay bg" data-ng-show="profileVm.sending">
+                        <span class="spinner-icon"></span>&nbsp;&nbsp;Sending...
+                    </div>
+                    <div class="profile-messages-overlay bg" data-ng-show="profileVm.messageErrorOverlay.length !== 0">
+                        <span data-ng-bind="profileVm.messageErrorOverlay" style="color:red;"></span>
+                    </div>
+                    <div class="profile-messages-top">
+                        <div class="profile-messages-overlay" data-ng-show="profileVm.messages.length === 0 && !profileVm.loadingMessages">
+                            No message history to show.
+                        </div>
+                        <div class="profile-messages-scrollport">
+                            <div class="profile-message-container" data-ng-repeat="m in profileVm.messages">
+                                <div class="profile-message" data-ng-class="{'outgoing': m.outgoing}">
+                                    <div class="profile-message-left">
+                                        <div class="profile-image-container">
+                                            <div class="profile-image-wrapper">
+                                                <!-- slow but works for the demo -->
+                                                <img data-ng-if="m.outgoing && profileVm.myUser.picture.length" data-ng-src="data:image/jpeg;base64,{{profileVm.myUser.picture}}">
+                                                <img data-ng-if="!m.outgoing && profileVm.data.picture.length" data-ng-src="data:image/jpeg;base64,{{profileVm.data.picture}}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="profile-message-right">
+                                        <div class="profile-message-name">
+                                            <span data-ng-show="m.outgoing" data-ng-bind="profileVm.myUser.fullname"></span>
+                                            <span data-ng-show="!m.outgoing" data-ng-bind="profileVm.data.fullname"></span>
+                                            <span class="profile-message-timestamp" data-ng-bind="m.timestamp | date : 'short'"></span>
+                                        </div>
+                                        <div class="profile-message-text" data-ng-bind="m.message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-messages-bottom">
+                        <div class="pull-right button profile-messages-button" data-ng-click="profileVm.sendMessage()">
+                            Send&nbsp;&nbsp;<span class="glyphicon glyphicon-send"></span>
+                        </div>
+                        <div class="profile-messages-input-wrapper">
+                            <input type="text" class="input" placeholder="Type your message here..." data-ng-model="profileVm.messageText" data-ng-keypress="profileVm.messageKeypress($event)">
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-messages-bottom-error" data-ng-bind="profileVm.messageError"></div>
+            </div>
         </div>
     </div>
 </div>
