@@ -38,6 +38,7 @@
                 name="email"
                 data-ng-model="registerVm.reg.email"
                 data-ng-trim="true"
+                maxlength="16"
                 data-ng-pattern="/^[a-zA-Z]+@cpp\.edu$/"
             >
             <div class="register-error" data-ng-class="{'show': registerForm.email.$error.cppEmail}">Account already exists.</div>
