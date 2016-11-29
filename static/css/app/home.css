@@ -7,6 +7,14 @@
     position: relative;
 }
 
+.home-logo {
+    width: 10vw;
+    margin-right: 2vw;
+    position: relative;
+    top: -1vw;
+    -webkit-filter: drop-shadow(1px 1px 6px #333);
+    filter: drop-shadow(1px 1px 6px #333);
+}
 
 .banner-overlay {
     position: absolute;
@@ -33,6 +41,7 @@
     font-size: 2vw;
     color: white;
     text-shadow: 1px 1px 5px #333;
+    margin-left: 12.6vw;
 }
 
 .home-section {
