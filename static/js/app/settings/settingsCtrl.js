@@ -41,6 +41,7 @@ settings.controller('settingsCtrl', ['$scope', '$http', '$timeout', 'authFactory
     // for conversations
     vm.convs = [];
     vm.loadingAllConvs = false;
+    vm.totalUnread = 0;
     // for single conversation
     vm.loadingConv = true;
     vm.showingConv = null;
@@ -287,11 +288,19 @@ settings.controller('settingsCtrl', ['$scope', '$http', '$timeout', 'authFactory
             'method': 'GET'
         }).then(function(response) {
             vm.convs = response.data.results;
+            vm.totalUnread = 0;
+            for (var i = 0; i < vm.convs.length; i++) {
+                if (vm.convs[i].unread > 0) {
+                    vm.totalUnread++;
+                }
+            }
             vm.loadingAllConvs = false;
         }, function(response) {
             vm.loadingAllConvs = false;
+            vm.totalUnread = 0;
         });
     };
+    fetchAllConversations();
 
     vm.showConv = function(conv) {
         vm.showingConv = conv;

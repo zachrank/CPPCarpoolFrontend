@@ -47,7 +47,7 @@
                     <a href="">Overview</a>
                 </li>
                 <li role="presentation" data-ng-class="{'active': settingsVm.tab === 1}" data-ng-click="settingsVm.setTab(1)">
-                    <a href="">Messages</a>
+                    <a href="">Messages <span data-ng-show="settingsVm.totalUnread > 0">(<span data-ng-bind="settingsVm.totalUnread"></span>)</span></a>
                 </li>
             </ul>
             <div data-ng-show="settingsVm.tab === 0">
