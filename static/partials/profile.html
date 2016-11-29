@@ -156,6 +156,9 @@
             </div>
             <div data-ng-show="profileVm.tab === 2">
                 <div class="profile-messages">
+                    <div class="profile-messages-overlay bg" data-ng-show="profileVm.loadingMessages">
+                        <span class="spinner-icon"></span>&nbsp;&nbsp;Loading...
+                    </div>
                     <div class="profile-messages-overlay bg" data-ng-show="profileVm.sending">
                         <span class="spinner-icon"></span>&nbsp;&nbsp;Sending...
                     </div>
@@ -163,7 +166,7 @@
                         <span data-ng-bind="profileVm.messageErrorOverlay" style="color:red;"></span>
                     </div>
                     <div class="profile-messages-top">
-                        <div class="profile-messages-overlay" data-ng-show="profileVm.messages.length === 0">
+                        <div class="profile-messages-overlay" data-ng-show="profileVm.messages.length === 0 && !profileVm.loadingMessages">
                             No message history to show.
                         </div>
                         <div class="profile-messages-scrollport">

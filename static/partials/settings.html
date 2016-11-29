@@ -212,7 +212,94 @@
                 </div>
             </div>
             <div data-ng-show="settingsVm.tab === 1">
-                
+                <div class="settings-convs" data-ng-show="!settingsVm.showingConv">
+                    <div class="settings-conv-overlay" data-ng-show="settingsVm.loadingAllConvs">
+                        <span class="spinner-icon"></span>&nbsp;&nbsp;Loading...
+                    </div>
+                    <div class="settings-conv-overlay" data-ng-show="settingsVm.convs.length === 0 && !settingsVm.loadingAllConvs">
+                        No message history to show.
+                    </div>
+                    <div class="settings-conv" data-ng-repeat="c in settingsVm.convs" data-ng-class="{'unread': c.unread}" data-ng-click="settingsVm.showConv(c)">
+                        <div class="settings-conv-left">
+                            <div class="profile-image-container">
+                                <div class="profile-image-wrapper">
+                                    <!-- slow but works for the demo -->
+                                    <img data-ng-if="c.picture.length" data-ng-src="data:image/jpeg;base64,{{c.picture}}">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="settings-conv-right">
+                            <div class="settings-conv-name">
+                                <span data-ng-bind="c.fullname"></span>
+                                <span class="settings-conv-timestamp" data-ng-bind="c.lastmessage.timestamp | date : 'short'"></span>
+                                <div class="settings-conv-badge" data-ng-show="c.unread">
+                                    <span data-ng-bind="c.unread"></span> unread
+                                </div>
+                            </div>
+                            <div class="settings-conv-lasttext">
+                                <span data-ng-bind="c.lastmessage.message"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div data-ng-if="settingsVm.showingConv" class="settings-conv-container">
+                    <div class="settings-conv-overlay" data-ng-show="settingsVm.loadingConv">
+                        <span class="spinner-icon"></span>&nbsp;&nbsp;Loading...
+                    </div>
+                    <div class="settings-conv-top">
+                        <div class="button settings-button" data-ng-click="settingsVm.backToConvs()">
+                            <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;&nbsp;Back
+                        </div>
+                        <span class="settings-conv-top-text">
+                            Conversation with <a data-ng-bind="settingsVm.showingConv.fullname" data-ng-href="/#/profile/{{settingsVm.showingConv.cppemail.split('@')[0]}}"></a>
+                        </span>
+                    </div>
+                    <div class="profile-messages">
+                        <div class="profile-messages-overlay bg" data-ng-show="settingsVm.sending">
+                            <span class="spinner-icon"></span>&nbsp;&nbsp;Sending...
+                        </div>
+                        <div class="profile-messages-overlay bg" data-ng-show="settingsVm.messageErrorOverlay.length !== 0">
+                            <span data-ng-bind="settingsVm.messageErrorOverlay" style="color:red;"></span>
+                        </div>
+                        <div class="profile-messages-top">
+                            <div class="profile-messages-overlay" data-ng-show="settingsVm.messages.length === 0">
+                                No message history to show.
+                            </div>
+                            <div class="profile-messages-scrollport">
+                                <div class="profile-message-container" data-ng-repeat="m in settingsVm.messages">
+                                    <div class="profile-message" data-ng-class="{'outgoing': m.outgoing}">
+                                        <div class="profile-message-left">
+                                            <div class="profile-image-container">
+                                                <div class="profile-image-wrapper">
+                                                    <!-- slow but works for the demo -->
+                                                    <img data-ng-if="m.outgoing && settingsVm.myUser.picture.length" data-ng-src="data:image/jpeg;base64,{{settingsVm.myUser.picture}}">
+                                                    <img data-ng-if="!m.outgoing && settingsVm.showingConv.picture.length" data-ng-src="data:image/jpeg;base64,{{settingsVm.showingConv.picture}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="profile-message-right">
+                                            <div class="profile-message-name">
+                                                <span data-ng-show="m.outgoing" data-ng-bind="settingsVm.myUser.fullname"></span>
+                                                <span data-ng-show="!m.outgoing" data-ng-bind="settingsVm.showingConv.fullname"></span>
+                                                <span class="profile-message-timestamp" data-ng-bind="m.timestamp | date : 'short'"></span>
+                                            </div>
+                                            <div class="profile-message-text" data-ng-bind="m.message"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="profile-messages-bottom">
+                            <div class="pull-right button profile-messages-button" data-ng-click="settingsVm.sendMessage()">
+                                Send&nbsp;&nbsp;<span class="glyphicon glyphicon-send"></span>
+                            </div>
+                            <div class="profile-messages-input-wrapper">
+                                <input type="text" class="input" placeholder="Type your message here..." data-ng-model="settingsVm.messageText" data-ng-keypress="settingsVm.messageKeypress($event)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-messages-bottom-error" data-ng-bind="settingsVm.messageError"></div>
+                </div>
             </div>
         </div>
     </div>

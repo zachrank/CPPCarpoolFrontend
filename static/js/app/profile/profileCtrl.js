@@ -9,53 +9,12 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
         'Sun', 'Mon', 'Tue', 'Wed', 'Thurs', 'Fri', 'Sat'
     ];
 
+    vm.loadingMessages = false;
     vm.sending = false;
     vm.messages = [];
     vm.messageText = "";
     vm.messageErrorOverlay = "";
     vm.messageError = "";
-    vm.sendMessage = function() {
-        if (vm.messageText.length === 0 || vm.sending) {
-            return;
-        }
-        vm.sending = true;
-        var messageTextRemember = vm.messageText;
-        vm.messageText = "";
-
-        $http({
-            'url': '/api/messages/',
-            'method': 'POST',
-            'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
-            'data': $.param({
-                'to_userid': vm.data.id,
-                'message': messageTextRemember
-            })
-        }).then(function(response) {
-            $http({
-                'url': '/api/messages/' + $routeParams.user,
-                'method': 'GET'
-            }).then(function(response) {
-                vm.messages = response.data.results;
-                vm.sending = false;
-                $timeout(function() {
-                    $('.profile-messages-scrollport').scrollTop($('.profile-messages-scrollport')[0].scrollHeight);
-                });
-            }, function(response) {
-                vm.messageErrorOverlay = "Error fetching messages.";
-                vm.sending = false;
-            });
-        }, function(response) {
-            vm.messageText = messageTextRemember;
-            vm.messageError = "Error sending message.";
-            vm.sending = false;
-        });
-    };
-
-    vm.messageKeypress = function(event) {
-        if (event.which === 13) {
-            vm.sendMessage();
-        }
-    };
 
     function parseTime(t) {
         var split = t.split(':');
@@ -117,10 +76,63 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
         vm.tab = tab;
         resetReview();
         if (tab === 2) {
-            // scroll to bottom of message history
+            // load message history
+            vm.fetchMessages();
+        }
+    };
+
+    vm.fetchMessages = function() {
+        if (vm.loadingMessages) {
+            return;
+        }
+        vm.loadingMessages = true;
+
+        $http({
+            'url': '/api/messages/' + $routeParams.user,
+            'method': 'GET'
+        }).then(function(response) {
+            vm.messages = response.data.results;
+            vm.sending = false;
+            vm.loadingMessages = false;
+            // scroll to end of message history
             $timeout(function() {
                 $('.profile-messages-scrollport').scrollTop($('.profile-messages-scrollport')[0].scrollHeight);
             });
+        }, function(response) {
+            vm.messageErrorOverlay = "Error fetching messages.";
+            vm.sending = false;
+            vm.loadingMessages = false;
+        });
+    };
+
+    vm.sendMessage = function() {
+        if (vm.messageText.length === 0 || vm.sending) {
+            return;
+        }
+        vm.sending = true;
+        var messageTextRemember = vm.messageText;
+        vm.messageText = "";
+
+        $http({
+            'url': '/api/messages/',
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
+            'data': $.param({
+                'to_userid': vm.data.id,
+                'message': messageTextRemember
+            })
+        }).then(function(response) {
+            vm.fetchMessages();
+        }, function(response) {
+            vm.messageText = messageTextRemember;
+            vm.messageError = "Error sending message.";
+            vm.sending = false;
+        });
+    };
+
+    vm.messageKeypress = function(event) {
+        if (event.which === 13) {
+            vm.sendMessage();
         }
     };
 
@@ -179,10 +191,9 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
             'method': 'GET'
         });
 
-        $q.all([userInfoRequest, reviewsRequest, messagesRequest]).then(function(responses) {
+        $q.all([userInfoRequest, reviewsRequest]).then(function(responses) {
             var userInfoResponse = responses[0];
             var reviewsResponse = responses[1];
-            var messagesResponse = responses[2];
 
             // make user info available
             vm.data = userInfoResponse.data;
@@ -211,9 +222,6 @@ profile.controller('profileCtrl', ['$scope', '$http', '$routeParams', 'authFacto
                 }
                 vm.data.stars = total / vm.data.reviews.length;
             }
-
-            // make messages available
-            vm.messages = messagesResponse.data.results;
 
             vm.loading = false;
         }, function() {

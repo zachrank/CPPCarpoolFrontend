@@ -1,6 +1,6 @@
 var settings = angular.module('app.settings', []);
 
-settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function($scope, $http, authFactory) {
+settings.controller('settingsCtrl', ['$scope', '$http', '$timeout', 'authFactory', function($scope, $http, $timeout, authFactory) {
     var vm = this;
 
     vm.tab = 0;
@@ -14,6 +14,18 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
         'Saturday'
     ];
 
+    var copyUserInfo = function() {
+        vm.myUser = angular.copy(authFactory.getUser());
+        if (typeof vm.myUser.id === "undefined") {
+            return;
+        }
+    };
+
+    copyUserInfo();
+    $scope.$onRootScope('userChange', function() {
+        copyUserInfo();
+    });
+
     //for displaying messages and errors
     vm.formErrorText = "";
     vm.formMessageText = "";
@@ -26,6 +38,17 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
     // for saving user data
     vm.saving = false;
     vm.saveError = false;
+    // for conversations
+    vm.convs = [];
+    vm.loadingAllConvs = false;
+    // for single conversation
+    vm.loadingConv = true;
+    vm.showingConv = null;
+    vm.messages = [];
+    vm.sending = false;
+    vm.messageText = "";
+    vm.messageErrorOverlay = "";
+    vm.messageError = "";
 
     $scope.$onRootScope('userChange', function() {
         vm.data = authFactory.getUser();
@@ -79,6 +102,9 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
 
     vm.setTab = function(tab) {
         vm.tab = tab;
+        if (tab === 1) {
+            fetchAllConversations();
+        }
     };
 
     vm.uploadPicture = function() {
@@ -248,6 +274,84 @@ settings.controller('settingsCtrl', ['$scope', '$http', 'authFactory', function(
     var showMessage = function(message) {
         vm.formMessageText = message;
         $("html, body").animate({ scrollTop: 0 }, 200);
+    };
+
+    var fetchAllConversations = function() {
+        if (vm.loadingAllConvs) {
+            return;
+        }
+        vm.loadingAllConvs = true;
+
+        $http({
+            'url': '/api/messages/conversations',
+            'method': 'GET'
+        }).then(function(response) {
+            vm.convs = response.data.results;
+            vm.loadingAllConvs = false;
+        }, function(response) {
+            vm.loadingAllConvs = false;
+        });
+    };
+
+    vm.showConv = function(conv) {
+        vm.showingConv = conv;
+        fetchConv(conv);
+    };
+
+    var fetchConv = function(conv) {
+        vm.loadingConv = true;
+        $http({
+            'url': '/api/messages/' + conv.cppemail.split('@')[0],
+            'method': 'GET'
+        }).then(function(response) {
+            vm.messages = response.data.results;
+            vm.sending = false;
+            vm.loadingConv = false;
+            $timeout(function() {
+                $('.profile-messages-scrollport').scrollTop($('.profile-messages-scrollport')[0].scrollHeight);
+            });
+        }, function(response) {
+            vm.messageErrorOverlay = "Error fetching messages.";
+            vm.sending = false;
+            vm.loadingConv = false;
+        });
+    };
+
+    vm.sendMessage = function() {
+        if (vm.messageText.length === 0 || vm.sending) {
+            return;
+        }
+        vm.sending = true;
+        var messageTextRemember = vm.messageText;
+        vm.messageText = "";
+
+        $http({
+            'url': '/api/messages/',
+            'method': 'POST',
+            'headers': {'Content-Type': 'application/x-www-form-urlencoded'},
+            'data': $.param({
+                'to_userid': vm.showingConv.id,
+                'message': messageTextRemember
+            })
+        }).then(function(response) {
+            fetchConv(vm.showingConv);
+        }, function(response) {
+            vm.messageText = messageTextRemember;
+            vm.messageError = "Error sending message.";
+            vm.sending = false;
+        });
+    };
+
+    vm.backToConvs = function() {
+        // reset state
+        vm.loadingConv = false;
+        vm.showingConv = null;
+        vm.messages = [];
+        vm.sending = false;
+        vm.messageText = "";
+        vm.messageErrorOverlay = "";
+        vm.messageError = "";
+        fetchAllConversations();
     };
 
     var load = function(silent) {

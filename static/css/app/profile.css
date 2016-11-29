@@ -225,6 +225,7 @@
 
 .profile-message-right {
     margin-left: 15px;
+    flex-grow: 1;
 }
 
 .profile-message-name {
