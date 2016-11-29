@@ -115,7 +115,11 @@
                     <div data-ng-if="profileVm.data && profileVm.data.reviews.length">
                         <div class="profile-review" data-ng-repeat="r in profileVm.data.reviews">
                             <div class="profile-review-image">
-
+                                <div class="profile-image-container">
+                                    <div class="profile-image-wrapper">
+                                        <img data-ng-if="r.reviewer_picture.length" data-ng-src="data:image/jpeg;base64,{{r.reviewer_picture}}">
+                                    </div>
+                                </div>
                             </div>
                             <div class="profile-review-content">
                                 <div class="profile-review-topline">

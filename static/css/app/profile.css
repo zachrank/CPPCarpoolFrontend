@@ -83,11 +83,10 @@
 
 .profile-review-image {
     min-width: 64px;
-    height: 64px;
-    border-radius: 5px;
-    background: url('/images/profile-default.png');
-    background-size: contain;
-    background-color: #ddd;
+}
+
+.profile-review-image > .profile-image-container {
+    margin-bottom: 0px;
 }
 
 .profile-review-content {
@@ -102,7 +101,7 @@
 
 .profile-review-name {
     color: black;
-    font-size: 20px;
+    font-size: 18px;
 }
 
 .profile-review-compose {
