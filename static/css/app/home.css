@@ -34,3 +34,30 @@
     color: white;
     text-shadow: 1px 1px 5px #333;
 }
+
+.home-section {
+    background: linear-gradient(to bottom,#fbfbfb 0,#f1f1f1 100%);
+    margin-bottom: -20px;
+    padding: 50px;
+}
+
+.home-section-title {
+    text-align: center;
+    font-size: 50px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.home-section-desc-container {
+    display: flex;
+    justify-content: center;
+}
+
+.home-section-desc {
+    font-size: 20px;
+    width: 50%;
+}
+
+.home-section-desc > p {
+    margin-bottom: 30px;
+}
