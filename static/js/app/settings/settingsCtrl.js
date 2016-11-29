@@ -351,6 +351,12 @@ settings.controller('settingsCtrl', ['$scope', '$http', '$timeout', 'authFactory
         });
     };
 
+    vm.messageKeypress = function(event) {
+        if (event.which === 13) {
+            vm.sendMessage();
+        }
+    };
+
     vm.backToConvs = function() {
         // reset state
         vm.loadingConv = false;
