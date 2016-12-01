@@ -24,6 +24,9 @@
                 <span data-ng-show="!searchVm.loading && !searchVm.error">We found {{searchVm.results.length}} user{{searchVm.results.length === 1 ? '':'s'}} near you.</span>
                 <span style="color:red;" data-ng-show="!searchVm.loading && searchVm.error">Error loading search results</span>
             </div>
+            <div class="search-bad-address" data-ng-show="!searchVm.loading && !searchVm.error && searchVm.results.length === 0">
+                Not getting any results? <a href="#/profile/">Make sure your address is valid.</a>
+            </div>
             <div class="search-results">
                 <div class="search-result" data-ng-repeat="r in searchVm.results">
                     <a data-ng-href="#/profile/{{r.cppusername}}" class="search-result-image">

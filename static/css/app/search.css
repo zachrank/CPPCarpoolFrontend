@@ -89,3 +89,10 @@
     width: 40px;
     text-align: right;
 }
+
+
+.search-bad-address {
+    margin-left: 15px;
+    font-size: 16px;
+    margin-top: 35px;
+}
