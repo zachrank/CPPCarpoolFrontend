@@ -1,5 +1,6 @@
 # CPP Carpool Frontend
 ----------
+Written in Fall 2016 for CS 480 - Software Engineering at Cal Poly Pomona
 
 AngularJS SPA frontend for cpp carpool web service
 
